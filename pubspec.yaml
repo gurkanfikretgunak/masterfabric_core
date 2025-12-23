@@ -1,6 +1,6 @@
 name: masterfabric_core
 description: "Core utilities, base classes, and shared logic for the MasterFabric Flutter project."
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/gurkanfikretgunak/masterfabric_core
 repository: https://github.com/gurkanfikretgunak/masterfabric_core
 
