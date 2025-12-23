@@ -60,13 +60,30 @@ A comprehensive Flutter package providing core utilities, base classes, and shar
 
 ## Installation
 
+### From pub.dev (Recommended)
+
 Add this to your package's `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  masterfabric_core: ^0.0.1
+```
+
+Then run:
+
+```bash
+flutter pub get
+```
+
+### From Git (Development)
+
+For the latest development version, you can use:
 
 ```yaml
 dependencies:
   masterfabric_core:
     git:
-      url: https://github.com/masterfabric-mobile/masterfabric_core.git
+      url: https://github.com/gurkanfikretgunak/masterfabric_core.git
       ref: dev  # or use a specific tag/commit
 ```
 
@@ -221,7 +238,14 @@ lib/
 
 For detailed documentation, see:
 - [CHANGELOG.md](CHANGELOG.md) - Version history and changes
-- [docs/analysis.md](docs/analysis.md) - Architecture analysis
+- [doc/analysis.md](doc/analysis.md) - Architecture analysis
+
+## Package Information
+
+- **Pub.dev**: [https://pub.dev/packages/masterfabric_core](https://pub.dev/packages/masterfabric_core)
+- **GitHub**: [https://github.com/gurkanfikretgunak/masterfabric_core](https://github.com/gurkanfikretgunak/masterfabric_core)
+- **Version**: 0.0.1
+- **License**: AGPL-3.0
 
 ## Contributing
 
@@ -237,9 +261,24 @@ This project is licensed under the GNU AGPL v3.0 License - see the [LICENSE](LIC
 
 ## Support
 
-For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/masterfabric-mobile/masterfabric_core).
+For issues, questions, or contributions, please visit the [GitHub repository](https://github.com/gurkanfikretgunak/masterfabric_core).
+
+## Publishing
+
+This package is published on [pub.dev](https://pub.dev/packages/masterfabric_core). You can install it directly using:
+
+```bash
+flutter pub add masterfabric_core
+```
+
+Or add it manually to your `pubspec.yaml`:
+
+```yaml
+dependencies:
+  masterfabric_core: ^0.0.1
+```
 
 ---
 
-**Note**: This package is currently in active development. API may change in future versions.
+**Published Package**: This package is available on [pub.dev](https://pub.dev/packages/masterfabric_core). For the latest stable version, use the pub.dev installation method above.
 
