@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:masterfabric_core/masterfabric_core.dart';
 import 'package:masterfabric_core_example/features/products/cubit/products_cubit.dart';
 import 'package:masterfabric_core_example/features/products/cubit/products_state.dart';
@@ -12,6 +13,33 @@ class ProductsView extends MasterViewCubit<ProductsCubit, ProductsState> {
   }) : super(
           currentView: MasterViewCubitTypes.content,
           goRoute: goRoute,
+          coreAppBar: (context, viewModel) {
+            final canPop = GoRouter.of(context).canPop();
+            return AppBar(
+              title: const Text('Products'),
+              leading: canPop
+                  ? IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => GoRouter.of(context).pop(),
+                      tooltip: 'Back',
+                    )
+                  : null,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {
+                    // Navigate to search or show search dialog
+                  },
+                  tooltip: 'Search',
+                ),
+                IconButton(
+                  icon: const Icon(Icons.refresh),
+                  onPressed: () => viewModel.loadProducts(),
+                  tooltip: 'Refresh',
+                ),
+              ],
+            );
+          },
         );
 
   @override

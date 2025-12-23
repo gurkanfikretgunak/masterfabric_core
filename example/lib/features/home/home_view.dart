@@ -13,6 +13,19 @@ class HomeView extends MasterViewCubit<HomeCubit, HomeState> {
   }) : super(
           currentView: MasterViewCubitTypes.content,
           goRoute: goRoute,
+          coreAppBar: (context, viewModel) {
+            // Don't show back button on home screen
+            return AppBar(
+              title: const Text('Home'),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.refresh),
+                  onPressed: () => viewModel.loadData(),
+                  tooltip: 'Refresh',
+                ),
+              ],
+            );
+          },
         );
 
   @override

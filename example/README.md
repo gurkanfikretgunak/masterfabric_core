@@ -13,6 +13,7 @@ This example app demonstrates how to use the `masterfabric_core` package in a Fl
 - Creating views that extend `MasterViewCubit`
 - State management with Cubit pattern
 - Loading, error, and success states
+- **AppBar configuration** - Custom AppBars with actions
 
 ### 3. **Helper Utilities**
 - `DeviceInfoHelper` - Get device information
@@ -62,14 +63,34 @@ example/
 
 ```dart
 class MyView extends MasterViewCubit<MyCubit, MyState> {
-  final void Function(String) goRoute;
-
   MyView({
     super.key,
-    required this.goRoute,
+    required Function(String) goRoute,
   }) : super(
     currentView: MasterViewCubitTypes.content,
-    viewModel: MyCubit(),
+    goRoute: goRoute,
+    // Optional: Add AppBar with back button
+    coreAppBar: (context, viewModel) {
+      final canPop = GoRouter.of(context).canPop();
+      return AppBar(
+        title: const Text('My View'),
+        // Show back button only if we can navigate back
+        leading: canPop
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back),
+                onPressed: () => GoRouter.of(context).pop(),
+                tooltip: 'Back',
+              )
+            : null,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => viewModel.loadData(),
+            tooltip: 'Refresh',
+          ),
+        ],
+      );
+    },
   );
 
   @override
@@ -113,8 +134,8 @@ final deviceInfo = DeviceInfoHelper.instance;
 final platform = await deviceInfo.getPlatform();
 
 // Local Storage
-await LocalStorageHelper.setString('key', 'value');
-final value = await LocalStorageHelper.getString('key');
+await LocalStorageHelper.setString('key', 'value'); // setString is async
+final value = LocalStorageHelper.getString('key'); // getString is synchronous
 
 // Asset Config
 final configHelper = AssetConfigHelper();
@@ -150,6 +171,13 @@ flutter run
 - Uses `go_router` for navigation
 - Routes defined in `AppRoutes.createRouter()`
 - Views receive `goRoute` callback for navigation
+
+### AppBar Features
+- Custom AppBars using `coreAppBar` parameter
+- AppBar actions that interact with the view model
+- Dynamic AppBar titles and icons
+- **Back button navigation** - Automatically shows back button when `canPop()` is true
+- Example: HomeView has refresh action, ProductsView and ProfileView have back button and action buttons
 
 ### Configuration
 - App configuration loaded from `assets/app_config.json`

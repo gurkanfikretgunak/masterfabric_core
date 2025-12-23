@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:masterfabric_core/masterfabric_core.dart';
 import 'package:masterfabric_core_example/features/profile/cubit/profile_cubit.dart';
 import 'package:masterfabric_core_example/features/profile/cubit/profile_state.dart';
@@ -12,6 +13,33 @@ class ProfileView extends MasterViewCubit<ProfileCubit, ProfileState> {
   }) : super(
           currentView: MasterViewCubitTypes.content,
           goRoute: goRoute,
+          coreAppBar: (context, viewModel) {
+            final canPop = GoRouter.of(context).canPop();
+            return AppBar(
+              title: const Text('Profile'),
+              leading: canPop
+                  ? IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () => GoRouter.of(context).pop(),
+                      tooltip: 'Back',
+                    )
+                  : null,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {
+                    // Navigate to settings or show settings dialog
+                  },
+                  tooltip: 'Settings',
+                ),
+                IconButton(
+                  icon: const Icon(Icons.refresh),
+                  onPressed: () => viewModel.loadProfile(),
+                  tooltip: 'Refresh',
+                ),
+              ],
+            );
+          },
         );
 
   @override

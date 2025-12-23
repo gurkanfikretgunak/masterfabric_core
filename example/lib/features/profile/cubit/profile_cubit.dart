@@ -20,8 +20,8 @@ class ProfileCubit extends BaseViewModelCubit<ProfileState> {
       final manufacturer = await deviceInfo.platformDeviceDeviceFactory();
 
       // Example: Get stored user data using LocalStorageHelper
-      final userName = await LocalStorageHelper.getString('user_name') ?? 'John Doe';
-      final email = await LocalStorageHelper.getString('user_email') ?? 'john@example.com';
+      final userName = LocalStorageHelper.getString('user_name') ?? 'John Doe';
+      final email = LocalStorageHelper.getString('user_email') ?? 'john@example.com';
       
       // Store example data if not exists
       if (userName == 'John Doe') {
