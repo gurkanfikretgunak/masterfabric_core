@@ -3,7 +3,6 @@ library master_view;
 import 'package:masterfabric_core/src/core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:osmea_components/osmea_components.dart';
 // import 'package:masterfabric_core/src/resources/resources.g.dart'; // Uncomment when generated
 
 part 'master_view_enums.dart'; // Include the enums part
@@ -215,7 +214,7 @@ abstract class MasterView<V extends BaseViewModelBloc<E, S>, E, S>
   Widget _createScaffold({required Widget body}) {
     return Scaffold(
       key: _scaffoldMessengerKey,
-      backgroundColor: OsmeaColors.white,
+      backgroundColor: Colors.white,
       body: body, // Set the body of the scaffold
     );
   }

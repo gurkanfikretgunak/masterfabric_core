@@ -1,8 +1,8 @@
 name: masterfabric_core
 description: "Core utilities, base classes, and shared logic for the MasterFabric Flutter project."
 version: 0.0.1
-homepage:
-publish_to: none
+homepage: https://github.com/masterfabric-mobile/masterfabric_core
+repository: https://github.com/masterfabric-mobile/masterfabric_core
 
 environment:
   sdk: ^3.9.2
@@ -54,12 +54,7 @@ dependencies:
   # Sharing
   share_plus: ^10.1.4
   
-  # Components
-  osmea_components:
-    git:
-      url: https://github.com/masterfabric-mobile/osmea.git
-      path: packages/components
-      ref: dev
+
 
 dev_dependencies:
   flutter_test:

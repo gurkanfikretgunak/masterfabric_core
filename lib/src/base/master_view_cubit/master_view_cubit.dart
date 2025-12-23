@@ -3,7 +3,6 @@ library master_view_cubit;
 import 'package:masterfabric_core/src/core.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:osmea_components/osmea_components.dart';
 
 part 'master_view_cubit_enums.dart';
 part 'master_view_cubit_mixins.dart';
@@ -201,7 +200,7 @@ abstract class MasterViewCubit<V extends BaseViewModelCubit<S>, S>
   Widget _createScaffold({required Widget body}) {
     return Scaffold(
       key: _scaffoldMessengerKey,
-      backgroundColor: OsmeaColors.white,
+      backgroundColor: Colors.white,
       body: body,
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masterfabric_core/src/views/splash/cubit/splash_cubit.dart';
 import 'package:masterfabric_core/src/views/splash/cubit/splash_state.dart';
-import 'package:osmea_components/osmea_components.dart';
 
 /// 🚀 **OSMEA Splash Space Widget**
 ///
@@ -26,24 +25,30 @@ class SplashSpaceWidget extends StatelessWidget {
         if (state.config == null) {
           return const SizedBox.shrink();
         }
-        return OsmeaComponents.scaffold(
+        return Scaffold(
           backgroundColor: _getBackgroundColor(context, state),
           body: Center(
-            child: OsmeaComponents.column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // 🖼️ Logo (if provided, ultra-minimal style)
                 if (state.config!.logoUrl.isNotEmpty)
                   GestureDetector(
                     onTap: onLogoTap,
-                    child: OsmeaComponents.container(
+                    child: Container(
                       width: state.config!.logoWidth,
                       height: state.config!.logoHeight,
-                      child: OsmeaComponents.image(
-                        imageUrl: state.config!.logoUrl,
+                      child: Image.network(
+                        state.config!.logoUrl,
                         width: state.config!.logoWidth,
                         height: state.config!.logoHeight,
                         fit: BoxFit.contain,
+                        errorBuilder: (context, error, stackTrace) {
+                          return SizedBox(
+                            width: state.config!.logoWidth,
+                            height: state.config!.logoHeight,
+                          );
+                        },
                       ),
                     ),
                   ),
@@ -51,19 +56,20 @@ class SplashSpaceWidget extends StatelessWidget {
                 // Spacing between logo and app name
                 if (state.config!.logoUrl.isNotEmpty &&
                     state.config!.appName != null)
-                  OsmeaComponents.sizedBox(height: context.spacing32),
+                  const SizedBox(height: 32),
 
                 // 📱 App name with space-style typography
                 if (state.config!.appName != null)
                   GestureDetector(
                     onTap: onLogoTap,
-                    child: OsmeaComponents.text(
+                    child: Text(
                       state.config!.appName!.toUpperCase(),
-                      variant: OsmeaTextVariant.displaySmall,
-                      fontWeight: FontWeight.w100,
-                      color: _getTextColor(context, state),
+                      style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                            fontWeight: FontWeight.w100,
+                            color: _getTextColor(context, state),
+                            letterSpacing: 4.0,
+                          ),
                       textAlign: TextAlign.center,
-                      letterSpacing: 4.0,
                     ),
                   ),
               ],
@@ -124,4 +130,3 @@ class SplashSpaceWidget extends StatelessWidget {
     return const Color(0xFFFFFFFF); // Default white text for space theme
   }
 }
-

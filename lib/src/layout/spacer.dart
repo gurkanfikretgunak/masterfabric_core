@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:masterfabric_core/src/helper/spacer_helper.dart';
-import 'package:osmea_components/osmea_components.dart';
 import 'package:masterfabric_core/src/base/master_view/master_app.dart' show globalDevModeSpacer;
 
 class CoreSpacer extends StatelessWidget {
@@ -28,9 +27,9 @@ class CoreSpacer extends StatelessWidget {
             alignment: Alignment.center,
             child: Text('${config.size.toInt()}',
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 10,
-                  color: OsmeaColors.black,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 )),
           )
@@ -44,9 +43,9 @@ class CoreSpacer extends StatelessWidget {
               child: Text(
                 '${config.size.toInt()}',
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 10,
-                  color: OsmeaColors.white,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),

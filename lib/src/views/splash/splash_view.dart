@@ -9,7 +9,6 @@ import 'package:masterfabric_core/src/views/splash/cubit/splash_cubit.dart';
 import 'package:masterfabric_core/src/views/splash/cubit/splash_state.dart';
 import 'package:masterfabric_core/src/helper/asset_config_helper.dart';
 import 'package:masterfabric_core/src/models/splash_models.dart';
-import 'package:osmea_components/osmea_components.dart';
 
 /// 🚀 **OSMEA Splash View**
 ///
@@ -40,7 +39,7 @@ class SplashView extends MasterViewCubit<SplashCubit, SplashState> {
           horizontalPadding: const PaddingVisibility.disabled(),
           navbarSpacer: const SpacerVisibility.disabled(),
           footerSpacer: const SpacerVisibility.disabled(),
-          backgroundColor: OsmeaColors.white, // Default background
+          backgroundColor: Colors.white, // Default background
         );
 
   @override

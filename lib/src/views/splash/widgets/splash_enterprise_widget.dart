@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:masterfabric_core/src/views/splash/cubit/splash_cubit.dart';
 import 'package:masterfabric_core/src/views/splash/cubit/splash_state.dart';
-import 'package:osmea_components/osmea_components.dart';
 
 /// 🚀 **OSMEA Splash Enterprise Widget**
 ///
@@ -31,15 +30,15 @@ class SplashEnterpriseWidget extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return OsmeaComponents.container(
+        return Container(
           color: _getBackgroundColor(state),
           child: SafeArea(
-            child: OsmeaComponents.container(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.spacing20,
-                vertical: context.spacing16,
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 16.0,
               ),
-              child: OsmeaComponents.column(
+              child: Column(
                 children: [
                   // 📱 Professional header with branding
                   _buildEnterpriseHeader(context, state),
@@ -82,7 +81,7 @@ class SplashEnterpriseWidget extends StatelessWidget {
         debugPrint('⚠️ Invalid background color: ${config!.backgroundColor}');
       }
     }
-    return OsmeaColors.paperWhite; // Default for enterprise theme
+    return Colors.grey.shade50; // Default for enterprise theme
   }
 
   /// 🎨 Get enterprise color scheme
@@ -107,7 +106,7 @@ class SplashEnterpriseWidget extends StatelessWidget {
         debugPrint('⚠️ Invalid primary color: ${config!.primaryColor}');
       }
     }
-    return OsmeaColors.nordicBlue;
+    return Colors.blue;
   }
 
   /// 🎨 Get text color from config
@@ -132,39 +131,41 @@ class SplashEnterpriseWidget extends StatelessWidget {
         debugPrint('⚠️ Invalid text color: ${config!.textColor}');
       }
     }
-    return OsmeaColors.thunder;
+    return Colors.black87;
   }
 
   /// 📱 Professional header section
   Widget _buildEnterpriseHeader(BuildContext context, SplashState state) {
     final primaryColor = _getEnterprisePrimaryColor(state);
 
-    return OsmeaComponents.container(
-      height: context.height80,
-      child: OsmeaComponents.row(
+    return SizedBox(
+      height: 80,
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // OSMEA Logo area
-          OsmeaComponents.row(
+          Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              OsmeaComponents.text(
+              Text(
                 'OSMEA',
-                variant: OsmeaTextVariant.titleLarge,
-                color: primaryColor,
-                fontWeight: FontWeight.w700,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: primaryColor,
+                      fontWeight: FontWeight.w700,
+                    ),
               ),
             ],
           ),
 
           // App version (if enabled)
           if (state.config!.showAppVersion && state.config!.appVersion != null)
-            OsmeaComponents.text(
+            Text(
               'v${state.config!.appVersion!}',
-              variant: OsmeaTextVariant.bodySmall,
-              color: OsmeaColors.pewter,
-              fontWeight: FontWeight.w500,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.grey.shade600,
+                    fontWeight: FontWeight.w500,
+                  ),
             ),
         ],
       ),
@@ -175,54 +176,55 @@ class SplashEnterpriseWidget extends StatelessWidget {
   Widget _buildCardContent(BuildContext context, SplashState state) {
     final config = state.config!;
 
-    return OsmeaComponents.container(
-      margin: EdgeInsets.symmetric(
-        horizontal: context.spacing8,
-        vertical: context.spacing16,
+    return Container(
+      margin: const EdgeInsets.symmetric(
+        horizontal: 8.0,
+        vertical: 16.0,
       ),
-      child: OsmeaComponents.container(
+      child: Container(
         decoration: BoxDecoration(
-          color: OsmeaColors.white,
-          borderRadius: BorderRadius.circular(context.spacing12),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.0),
           border: Border.all(
-            color: OsmeaColors.silver,
-            width: context.width1,
+            color: Colors.grey.shade300,
+            width: 1.0,
           ),
           boxShadow: [
             BoxShadow(
-              color: OsmeaColors.ash,
-              blurRadius: context.blurRadius8,
-              offset: context.offsetVertical2,
+              color: Colors.grey.shade400,
+              blurRadius: 8.0,
+              offset: const Offset(0, 2),
             ),
           ],
         ),
         child: SingleChildScrollView(
-          child: OsmeaComponents.container(
-            padding: EdgeInsets.all(context.spacing24),
-            child: OsmeaComponents.column(
+          child: Container(
+            padding: const EdgeInsets.all(24.0),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // 🖼️ Professional logo area
                 _buildEnterpriseLogo(context, state),
 
-                OsmeaComponents.sizedBox(height: context.spacing24),
+                const SizedBox(height: 24),
 
                 // 📝 App name with enterprise typography
                 if (config.appName != null)
-                  OsmeaComponents.text(
+                  Text(
                     config.appName!,
-                    variant: OsmeaTextVariant.headlineMedium,
-                    color: _getTextColor(state),
-                    fontWeight: FontWeight.w600,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                          color: _getTextColor(state),
+                          fontWeight: FontWeight.w600,
+                        ),
                     textAlign: TextAlign.center,
                   ),
 
-                OsmeaComponents.sizedBox(height: context.spacing16),
+                const SizedBox(height: 16),
 
                 // 🎯 Feature highlights
                 _buildFeatureHighlights(context, state),
 
-                OsmeaComponents.sizedBox(height: context.spacing24),
+                const SizedBox(height: 24),
 
                 // 📊 Professional loading indicator
                 if (config.showLoadingIndicator)
@@ -238,37 +240,49 @@ class SplashEnterpriseWidget extends StatelessWidget {
   /// 🖼️ Enterprise logo element
   Widget _buildEnterpriseLogo(BuildContext context, SplashState state) {
     final config = state.config!;
+    final screenHeight = MediaQuery.of(context).size.height;
 
-    return OsmeaComponents.container(
-      height: context.dynamicHeight(0.15),
-      child: OsmeaComponents.center(
+    return SizedBox(
+      height: screenHeight * 0.15,
+      child: Center(
         child: GestureDetector(
           onTap: onLogoTap,
-          child: OsmeaComponents.container(
+          child: Container(
             width: config.logoWidth,
             height: config.logoHeight,
             decoration: BoxDecoration(
-              color: OsmeaColors.snow,
-              borderRadius: BorderRadius.circular(context.spacing16),
+              color: Colors.grey.shade50,
+              borderRadius: BorderRadius.circular(16.0),
               border: Border.all(
-                color: OsmeaColors.silver,
-                width: context.width1,
+                color: Colors.grey.shade300,
+                width: 1.0,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: OsmeaColors.ash,
-                  blurRadius: context.blurRadius8,
-                  offset: context.offsetVertical4,
+                  color: Colors.grey.shade400,
+                  blurRadius: 8.0,
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
-            child: OsmeaComponents.center(
-              child: OsmeaComponents.image(
-                imageUrl: config.logoUrl,
-                width: config.logoWidth * 0.8,
-                height: config.logoHeight * 0.8,
-                fit: BoxFit.contain,
-              ),
+            child: Center(
+              child: config.logoUrl.isNotEmpty
+                  ? Image.network(
+                      config.logoUrl,
+                      width: config.logoWidth * 0.8,
+                      height: config.logoHeight * 0.8,
+                      fit: BoxFit.contain,
+                      errorBuilder: (context, error, stackTrace) {
+                        return SizedBox(
+                          width: config.logoWidth * 0.8,
+                          height: config.logoHeight * 0.8,
+                        );
+                      },
+                    )
+                  : SizedBox(
+                      width: config.logoWidth * 0.8,
+                      height: config.logoHeight * 0.8,
+                    ),
             ),
           ),
         ),
@@ -280,11 +294,11 @@ class SplashEnterpriseWidget extends StatelessWidget {
   Widget _buildFeatureHighlights(BuildContext context, SplashState state) {
     final primaryColor = _getEnterprisePrimaryColor(state);
 
-    return OsmeaComponents.container(
+    return Container(
       child: Wrap(
         alignment: WrapAlignment.center,
-        spacing: context.spacing8,
-        runSpacing: context.spacing8,
+        spacing: 8.0,
+        runSpacing: 8.0,
         children: [
           _buildFeatureBadge(context, 'Secure', Icons.security, primaryColor),
           _buildFeatureBadge(
@@ -298,33 +312,34 @@ class SplashEnterpriseWidget extends StatelessWidget {
   /// 🏷️ Feature badge
   Widget _buildFeatureBadge(
       BuildContext context, String label, IconData icon, Color color) {
-    return OsmeaComponents.container(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.spacing12,
-        vertical: context.spacing8,
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12.0,
+        vertical: 8.0,
       ),
       decoration: BoxDecoration(
-        color: OsmeaColors.snow,
-        borderRadius: BorderRadius.circular(context.spacing8),
+        color: Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(8.0),
         border: Border.all(
-          color: OsmeaColors.silver,
-          width: context.width1,
+          color: Colors.grey.shade300,
+          width: 1.0,
         ),
       ),
-      child: OsmeaComponents.row(
+      child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Icon(
             icon,
-            size: context.iconSizeSmall,
+            size: 16.0,
             color: color,
           ),
-          OsmeaComponents.sizedBox(width: context.spacing6),
-          OsmeaComponents.text(
+          const SizedBox(width: 6),
+          Text(
             label,
-            variant: OsmeaTextVariant.bodySmall,
-            color: color,
-            fontWeight: FontWeight.w500,
+            style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                  color: color,
+                  fontWeight: FontWeight.w500,
+                ),
           ),
         ],
       ),
@@ -337,25 +352,28 @@ class SplashEnterpriseWidget extends StatelessWidget {
     final config = state.config!;
     final primaryColor = _getEnterprisePrimaryColor(state);
 
-    return OsmeaComponents.container(
-      child: OsmeaComponents.column(
+    return Container(
+      child: Column(
         children: [
           // Professional loading indicator
-          OsmeaComponents.loading(
-            type: LoadingType.circularFade,
-            size: config.loadingIndicatorSize.toDouble(),
-            color: primaryColor,
+          SizedBox(
+            width: config.loadingIndicatorSize.toDouble(),
+            height: config.loadingIndicatorSize.toDouble(),
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+            ),
           ),
 
-          OsmeaComponents.sizedBox(height: context.spacing16),
+          const SizedBox(height: 16),
 
           // Loading text with professional styling
-          OsmeaComponents.text(
+          Text(
             config.loadingText,
-            variant: OsmeaTextVariant.bodyMedium,
-            color: OsmeaColors.pewter,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Colors.grey.shade600,
+                  fontWeight: FontWeight.w500,
+                ),
             textAlign: TextAlign.center,
-            fontWeight: FontWeight.w500,
           ),
         ],
       ),
@@ -366,22 +384,22 @@ class SplashEnterpriseWidget extends StatelessWidget {
   Widget _buildEnterpriseFooter(BuildContext context, SplashState state) {
     final config = state.config!;
 
-    return OsmeaComponents.container(
-      padding: EdgeInsets.symmetric(vertical: context.spacing24),
-      child: OsmeaComponents.column(
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 24.0),
+      child: Column(
         children: [
           // Copyright text (if enabled)
           if (config.showCopyright)
-            OsmeaComponents.text(
+            Text(
               config.copyrightText,
-              variant: OsmeaTextVariant.bodySmall,
-              color: OsmeaColors.pewter,
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.grey.shade600,
+                    fontWeight: FontWeight.w400,
+                  ),
               textAlign: TextAlign.center,
-              fontWeight: FontWeight.w400,
             ),
         ],
       ),
     );
   }
 }
-

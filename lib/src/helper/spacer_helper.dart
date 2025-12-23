@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:osmea_components/osmea_components.dart';
 
 /// Enum for all core spacer types
 enum CoreSpacerType {
@@ -25,17 +24,17 @@ class SpacerHelper {
   static SpacerConfig configOf(CoreSpacerType type) {
     switch (type) {
       case CoreSpacerType.navbar:
-        return SpacerConfig(24, Axis.vertical, OsmeaColors.nordicBlue);
+        return const SpacerConfig(24, Axis.vertical, Colors.blue);
       case CoreSpacerType.footer:
-        return SpacerConfig(36, Axis.vertical, OsmeaColors.nordicBlue);
+        return const SpacerConfig(36, Axis.vertical, Colors.blue);
       case CoreSpacerType.content:
-        return SpacerConfig(16, Axis.vertical, OsmeaColors.forestHeart);
+        return const SpacerConfig(16, Axis.vertical, Colors.green);
       case CoreSpacerType.section:
-        return SpacerConfig(32, Axis.vertical, OsmeaColors.pineGrove);
+        return const SpacerConfig(32, Axis.vertical, Colors.teal);
       case CoreSpacerType.horizontal:
-        return SpacerConfig(16, Axis.horizontal, OsmeaColors.deepSea);
+        return const SpacerConfig(16, Axis.horizontal, Colors.indigo);
       case CoreSpacerType.vertical:
-        return SpacerConfig(16, Axis.vertical, OsmeaColors.sunsetGlow);
+        return const SpacerConfig(16, Axis.vertical, Colors.orange);
     }
   }
 

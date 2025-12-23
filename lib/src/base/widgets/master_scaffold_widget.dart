@@ -1,7 +1,6 @@
 import 'package:masterfabric_core/src/core.dart';
 import 'package:flutter/material.dart';
 import 'package:masterfabric_core/src/helper/grid_helper.dart';
-import 'package:osmea_components/osmea_components.dart';
 
 /// 🏗️ Flexible scaffold widget that adapts based on parameters
 ///
@@ -70,7 +69,7 @@ import 'package:osmea_components/osmea_components.dart';
 /// MasterScaffoldWidget(
 ///   scaffoldMessengerKey: key,
 ///   body: content,
-///   backgroundColor: OsmeaColors.nordicBlue,         // 🎨 Custom background color
+///   backgroundColor: Colors.blue,         // 🎨 Custom background color
 /// )
 /// ```
 class MasterScaffoldWidget extends StatelessWidget {
@@ -84,7 +83,7 @@ class MasterScaffoldWidget extends StatelessWidget {
   final bool? extendBody; // Default: true
   final bool? extendBodyBehindAppBar; // Default: true
   final bool? useSafeArea; // Default: true
-  final Color? backgroundColor; // Default: OsmeaColors.white
+  final Color? backgroundColor; // Default: Colors.white
 
   // 🎨 Layout configuration via custom value options
   final SpacerVisibility? navbarSpacer; // Top spacer configuration
@@ -121,7 +120,7 @@ class MasterScaffoldWidget extends StatelessWidget {
     this.extendBody, // Default: true
     this.extendBodyBehindAppBar, // Default: true
     this.useSafeArea, // Default: true
-    this.backgroundColor, // Default: OsmeaColors.white
+    this.backgroundColor, // Default: Colors.white
 
     // 🎨 Layout configuration
     this.navbarSpacer, // Top spacer configuration
@@ -176,7 +175,7 @@ class MasterScaffoldWidget extends StatelessWidget {
       // 🎛️ Apply scaffold parameters with defaults
       extendBody: extendBody ?? true,
       extendBodyBehindAppBar: extendBodyBehindAppBar ?? true,
-      backgroundColor: backgroundColor ?? OsmeaColors.white,
+      backgroundColor: backgroundColor ?? Colors.white,
       key: scaffoldMessengerKey,
       appBar: appBar != null &&
               (useSafeArea ?? true) == false &&

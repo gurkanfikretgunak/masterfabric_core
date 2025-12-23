@@ -92,8 +92,5 @@ export 'package:masterfabric_core/src/resources/resources.g.dart';
 // DI
 export 'package:masterfabric_core/src/di/config/injection.dart';
 
-// Components (if available)
-// Note: LoadingType, LoadingCubit, LoadingState are hidden to avoid conflicts with masterfabric_core's own implementations
-// Export osmea_components - layout types are defined in master_scaffold_widget.dart
-export 'package:osmea_components/osmea_components.dart' 
-    hide LoadingType, LoadingCubit, LoadingState;
+// Components
+// Layout types are defined in master_scaffold_widget.dart
