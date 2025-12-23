@@ -50,5 +50,35 @@ class ProfileCubit extends BaseViewModelCubit<ProfileState> {
     // Reset state
     stateChanger(const ProfileState.initial());
   }
+
+  /// Show settings dialog
+  void showSettings() {
+    // Load settings from storage
+    final notificationsEnabled = LocalStorageHelper.getBool('notifications_enabled') ?? true;
+    final themeMode = LocalStorageHelper.getString('theme_mode') ?? 'light';
+    
+    stateChanger(state.copyWith(
+      showSettingsDialog: true,
+      notificationsEnabled: notificationsEnabled,
+      themeMode: themeMode,
+    ));
+  }
+
+  /// Hide settings dialog
+  void hideSettings() {
+    stateChanger(state.copyWith(showSettingsDialog: false));
+  }
+
+  /// Toggle notifications
+  Future<void> toggleNotifications(bool enabled) async {
+    await LocalStorageHelper.setBool('notifications_enabled', enabled);
+    stateChanger(state.copyWith(notificationsEnabled: enabled));
+  }
+
+  /// Update theme mode
+  Future<void> updateThemeMode(String mode) async {
+    await LocalStorageHelper.setString('theme_mode', mode);
+    stateChanger(state.copyWith(themeMode: mode));
+  }
 }
 

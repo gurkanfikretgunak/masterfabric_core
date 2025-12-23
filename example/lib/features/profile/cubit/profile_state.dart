@@ -10,6 +10,9 @@ class ProfileState extends Equatable {
   final String? platform;
   final String? deviceId;
   final String? manufacturer;
+  final bool showSettingsDialog;
+  final bool notificationsEnabled;
+  final String themeMode;
 
   const ProfileState({
     required this.isLoading,
@@ -20,6 +23,9 @@ class ProfileState extends Equatable {
     this.platform,
     this.deviceId,
     this.manufacturer,
+    this.showSettingsDialog = false,
+    this.notificationsEnabled = true,
+    this.themeMode = 'light',
   });
 
   const ProfileState.initial()
@@ -30,7 +36,10 @@ class ProfileState extends Equatable {
         email = null,
         platform = null,
         deviceId = null,
-        manufacturer = null;
+        manufacturer = null,
+        showSettingsDialog = false,
+        notificationsEnabled = true,
+        themeMode = 'light';
 
   const ProfileState.loading()
       : isLoading = true,
@@ -40,7 +49,10 @@ class ProfileState extends Equatable {
         email = null,
         platform = null,
         deviceId = null,
-        manufacturer = null;
+        manufacturer = null,
+        showSettingsDialog = false,
+        notificationsEnabled = true,
+        themeMode = 'light';
 
   const ProfileState.loaded({
     this.userName,
@@ -48,6 +60,9 @@ class ProfileState extends Equatable {
     this.platform,
     this.deviceId,
     this.manufacturer,
+    this.showSettingsDialog = false,
+    this.notificationsEnabled = true,
+    this.themeMode = 'light',
   })  : isLoading = false,
         hasError = false,
         errorMessage = null;
@@ -59,7 +74,38 @@ class ProfileState extends Equatable {
         email = null,
         platform = null,
         deviceId = null,
-        manufacturer = null;
+        manufacturer = null,
+        showSettingsDialog = false,
+        notificationsEnabled = true,
+        themeMode = 'light';
+
+  ProfileState copyWith({
+    bool? isLoading,
+    bool? hasError,
+    String? errorMessage,
+    String? userName,
+    String? email,
+    String? platform,
+    String? deviceId,
+    String? manufacturer,
+    bool? showSettingsDialog,
+    bool? notificationsEnabled,
+    String? themeMode,
+  }) {
+    return ProfileState(
+      isLoading: isLoading ?? this.isLoading,
+      hasError: hasError ?? this.hasError,
+      errorMessage: errorMessage ?? this.errorMessage,
+      userName: userName ?? this.userName,
+      email: email ?? this.email,
+      platform: platform ?? this.platform,
+      deviceId: deviceId ?? this.deviceId,
+      manufacturer: manufacturer ?? this.manufacturer,
+      showSettingsDialog: showSettingsDialog ?? this.showSettingsDialog,
+      notificationsEnabled: notificationsEnabled ?? this.notificationsEnabled,
+      themeMode: themeMode ?? this.themeMode,
+    );
+  }
 
   @override
   List<Object?> get props => [
@@ -71,6 +117,9 @@ class ProfileState extends Equatable {
         platform,
         deviceId,
         manufacturer,
+        showSettingsDialog,
+        notificationsEnabled,
+        themeMode,
       ];
 }
 

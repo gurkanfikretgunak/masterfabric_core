@@ -27,9 +27,7 @@ class ProfileView extends MasterViewCubit<ProfileCubit, ProfileState> {
               actions: [
                 IconButton(
                   icon: const Icon(Icons.settings),
-                  onPressed: () {
-                    // Navigate to settings or show settings dialog
-                  },
+                  onPressed: () => viewModel.showSettings(),
                   tooltip: 'Settings',
                 ),
                 IconButton(
@@ -56,6 +54,13 @@ class ProfileView extends MasterViewCubit<ProfileCubit, ProfileState> {
           return const Center(
             child: CircularProgressIndicator(),
           );
+        }
+
+        // Show settings dialog if needed
+        if (state.showSettingsDialog) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _showSettingsDialog(context, viewModel, state);
+          });
         }
 
         return SingleChildScrollView(
@@ -168,6 +173,97 @@ class ProfileView extends MasterViewCubit<ProfileCubit, ProfileState> {
       title: Text(label),
       subtitle: Text(value),
     );
+  }
+
+  void _showSettingsDialog(
+    BuildContext context,
+    ProfileCubit viewModel,
+    ProfileState state,
+  ) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Settings'),
+        content: StatefulBuilder(
+          builder: (context, setState) {
+            return SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Notifications Toggle
+                  ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    title: const Text('Notifications'),
+                    subtitle: const Text('Enable push notifications'),
+                    trailing: Switch(
+                      value: state.notificationsEnabled,
+                      onChanged: (value) {
+                        viewModel.toggleNotifications(value);
+                        setState(() {});
+                      },
+                    ),
+                  ),
+                  const Divider(),
+                  
+                  // Theme Mode Selection
+                  const Text(
+                    'Theme Mode',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 8),
+                  RadioListTile<String>(
+                    title: const Text('Light'),
+                    value: 'light',
+                    groupValue: state.themeMode,
+                    onChanged: (value) {
+                      if (value != null) {
+                        viewModel.updateThemeMode(value);
+                        setState(() {});
+                      }
+                    },
+                  ),
+                  RadioListTile<String>(
+                    title: const Text('Dark'),
+                    value: 'dark',
+                    groupValue: state.themeMode,
+                    onChanged: (value) {
+                      if (value != null) {
+                        viewModel.updateThemeMode(value);
+                        setState(() {});
+                      }
+                    },
+                  ),
+                  RadioListTile<String>(
+                    title: const Text('System'),
+                    value: 'system',
+                    groupValue: state.themeMode,
+                    onChanged: (value) {
+                      if (value != null) {
+                        viewModel.updateThemeMode(value);
+                        setState(() {});
+                      }
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              viewModel.hideSettings();
+              Navigator.of(dialogContext).pop();
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    ).then((_) {
+      // Hide settings dialog when dialog is closed
+      viewModel.hideSettings();
+    });
   }
 }
 
