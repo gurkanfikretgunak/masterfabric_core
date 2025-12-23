@@ -1,0 +1,34 @@
+name: masterfabric_core_example
+description: Example app demonstrating masterfabric_core package usage
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # MasterFabric Core Package
+  masterfabric_core:
+    path: ../
+  
+  # Additional dependencies (already included in masterfabric_core)
+  flutter_bloc: ^9.1.0
+  go_router: ^15.1.1
+  equatable: ^2.0.7
+  get_it: ^8.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/app_config.json
+

@@ -75,7 +75,7 @@ abstract class MasterViewCubit<V extends BaseViewModelCubit<S>, S>
     this.customAppBarPadding,
     this.defaultAppBarPadding = 16.0,
     required this.goRoute,
-  }) : assert(arguments.isNotEmpty, 'Arguments must not be empty') {
+  }) {
     FlutterError.onError = (FlutterErrorDetails details) {
       debugPrint('FlutterError: ${details.exception}');
       debugPrintStack(stackTrace: details.stack);
