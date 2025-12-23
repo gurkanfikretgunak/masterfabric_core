@@ -1,0 +1,82 @@
+{
+  "common": {
+    "ok": "OK",
+    "cancel": "Cancel",
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "done": "Done",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "dismiss": "Dismiss",
+    "grant": "Grant",
+    "undo": "Undo"
+  },
+  "auth": {
+    "title": "Authentication",
+    "sign_in": "Sign In",
+    "sign_up": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "forgot_password": "Forgot Password?",
+    "remember_me": "Remember me",
+    "sign_in_failed": "Sign in failed",
+    "sign_up_failed": "Sign up failed"
+  },
+  "account": {
+    "title": "Account",
+    "profile": "Profile",
+    "settings": "Settings",
+    "logout": "Logout"
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "get_started": "Get Started",
+    "previous": "Previous",
+    "next": "Next",
+    "no_pages_configured": "No onboarding pages configured"
+  },
+  "permissions": {
+    "title": "Permissions Required",
+    "description": "This app needs certain permissions to function properly.",
+    "grant": "Grant",
+    "grant_all": "Grant All Permissions",
+    "denied": "Permission Denied"
+  },
+  "search": {
+    "hint": "Search...",
+    "no_results": "No results found"
+  },
+  "error": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Network error. Please check your connection.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "error_code": "Error Code"
+  },
+  "splash": {
+    "loading": "Loading...",
+    "webview": "Webview",
+    "error": "Error occurred",
+    "maintenance": "Under maintenance",
+    "empty": "No data available",
+    "unauthorized": "Unauthorized",
+    "timeout": "Request timeout"
+  },
+  "empty_view": {
+    "title": "No content available",
+    "description": "There's nothing to show here."
+  },
+  "loading": {
+    "loading": "Loading..."
+  },
+  "image_detail": {
+    "title": "Image"
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "appSettings": {
+    "appName": "MasterFabric",
+    "version": "0.0.1",
+    "environment": "development",
+    "debugMode": true,
+    "maintenanceMode": false,
+    "minSupportedVersion": "0.0.1"
+  },
+  "uiConfiguration": {
+    "themeMode": "light",
+    "fontScale": 1.0,
+    "textDirection": "ltr",
+    "showPerformanceOverlay": false,
+    "devModeGrid": true,
+    "devModeSpacer": true
+  },
+  "splashConfiguration": {
+    "style": "startup",
+    "autoNavigate": true,
+    "durationSeconds": 3,
+    "logoUrl": "",
+    "logoWidth": 112.0,
+    "logoHeight": 112.0,
+    "showLoadingIndicator": true,
+    "loadingIndicatorSize": 32,
+    "loadingText": "Loading...",
+    "showAppVersion": false,
+    "showCopyright": false,
+    "copyrightText": "© 2025 OSMEA Team",
+    "devModeTapCount": 5,
+    "devModeEnabled": false,
+    "animationDuration": 300,
+    "primaryColor": "#2196F3",
+    "textColor": "#000000",
+    "backgroundColor": "#FFFFFF",
+    "appName": "MasterFabric",
+    "appVersion": "0.0.1"
+  },
+  "featureFlags": {
+    "onboardingEnabled": true,
+    "analyticsEnabled": false,
+    "crashReportingEnabled": false,
+    "remoteConfigEnabled": false
+  },
+  "navigationConfiguration": {
+    "defaultRoute": "/",
+    "enableDeepLinking": true,
+    "enableBackButton": true
+  },
+  "apiConfiguration": {
+    "baseUrl": "",
+    "timeoutSeconds": 30,
+    "retryCount": 3,
+    "enableLogging": true
+  },
+  "permissionsConfiguration": {
+    "requestOnStartup": false,
+    "requiredPermissions": [],
+    "optionalPermissions": []
+  },
+  "localizationConfiguration": {
+    "defaultLocale": "en",
+    "supportedLocales": ["en"],
+    "fallbackLocale": "en"
+  },
+  "storageConfiguration": {
+    "enableEncryption": false,
+    "cacheDurationDays": 7,
+    "maxCacheSizeMb": 100
+  }
+}

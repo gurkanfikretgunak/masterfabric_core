@@ -1,0 +1,110 @@
+name: masterfabric_core
+description: "Core utilities, base classes, and shared logic for the MasterFabric Flutter project."
+version: 0.0.1
+homepage:
+publish_to: none
+
+environment:
+  sdk: ^3.9.2
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management
+  flutter_bloc: ^9.1.0
+  hydrated_bloc: ^10.1.1
+  equatable: ^2.0.7
+  
+  # Navigation
+  go_router: ^15.1.1
+  
+  # Dependency Injection
+  injectable: ^2.7.1
+  get_it: ^8.3.0
+  
+  # Localization
+  slang: ^4.11.1
+  slang_flutter: ^4.11.0
+  
+  # Utilities
+  logger: ^2.5.0
+  dio: ^5.7.0
+  shared_preferences: ^2.5.3
+  sqflite: ^2.4.2
+  url_launcher: ^6.3.1
+  intl: ^0.20.0
+  
+  # System
+  device_info_plus: ^11.4.0
+  package_info_plus: ^8.3.0
+  permission_handler: ^11.2.0
+  path_provider: ^2.1.5
+  
+  # UI
+  flutter_html: ^3.0.0
+  flutter_inappwebview: ^6.1.5
+  webview_flutter: ^4.10.0
+  
+  # Notifications
+  flutter_local_notifications: ^19.4.2
+  timezone: ^0.10.1
+  
+  # Sharing
+  share_plus: ^10.1.4
+  
+  # Components
+  osmea_components:
+    git:
+      url: https://github.com/masterfabric-mobile/osmea.git
+      path: packages/components
+      ref: dev
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.7
+  injectable_generator: ^2.11.1
+  slang_build_runner: ^4.8.0
+
+dependency_overrides:
+  build: ^4.0.0
+  intl: ^0.20.0
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  assets:
+    - assets/app_config.json
+    - assets/i18n/
+  #
+  # For details regarding assets in packages, see
+  # https://flutter.dev/to/asset-from-package
+  #
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/to/resolution-aware-images
+
+  # To add custom fonts to your package, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts in packages, see
+  # https://flutter.dev/to/font-from-package
