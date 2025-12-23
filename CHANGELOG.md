@@ -116,7 +116,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - UI: `flutter_html` (^3.0.0), `flutter_inappwebview` (^6.1.5), `webview_flutter` (^4.10.0)
 - Notifications: `flutter_local_notifications` (^19.4.2), `timezone` (^0.10.1)
 - Sharing: `share_plus` (^10.1.4)
-- Components: `osmea_components` (Git dependency from masterfabric-mobile/osmea)
 
 ### Dev Dependencies
 - `flutter_test` - Flutter testing framework
@@ -131,4 +130,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Architecture overview
 - Quick start guide
 
-[0.0.1]: https://github.com/masterfabric-mobile/masterfabric_core/releases/tag/v0.0.1
+[0.0.1]: https://github.com/gurkanfikretgunak/masterfabric_core/releases/tag/v0.0.1
+
+## [0.0.2] - 2025-12-23
+
+### Changed
+- Migrated from `osmea_components` to Material Design widgets
+- All UI components now use Flutter's built-in Material widgets
+- Updated `MasterScaffoldWidget` to use Material Design instead of osmea_components
+- Updated splash widgets (`SplashStartupWidget`, `SplashSpaceWidget`, `SplashEnterpriseWidget`) to use Material widgets
+- Replaced `OsmeaColors` with Material `Colors`
+- Replaced `OsmeaComponents.*` helpers with standard Material widgets (`Container`, `Column`, `Row`, `Text`, etc.)
+- Updated `SpacerHelper` to use Material colors instead of osmea colors
+- Removed `osmea_components` dependency from `pubspec.yaml`
+
+### Removed
+- `osmea_components` Git dependency (replaced with Material widgets)
+- All `OsmeaComponents.*` helper methods
+- All `OsmeaColors.*` color references
+- `osmea_components` export from main library
+
+### Documentation
+- Updated README.md with pub.dev installation instructions
+- Added package publishing information
+- Updated repository URLs to `https://github.com/gurkanfikretgunak/masterfabric_core`
+
+### Publishing
+- Package published to [pub.dev](https://pub.dev/packages/masterfabric_core)
+- Package ready for public use via `flutter pub add masterfabric_core`
+- Version bumped to 0.0.2
+
+[0.0.2]: https://github.com/gurkanfikretgunak/masterfabric_core/releases/tag/v0.0.2
