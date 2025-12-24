@@ -5,6 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.4] - 2025-12-24
+
+### Changed
+
+#### Example App
+- Refactored all helper demonstration views to follow consistent feature pattern
+- Reorganized helper views into structured folders with cubit/state architecture:
+  - `device_info/` - Device Info Helper demo with cubit/state
+  - `storage/` - Local Storage Helper demo with cubit/state
+  - `datetime/` - DateTime Helper demo with cubit/state
+  - `url_launcher/` - URL Launcher Helper demo with cubit/state
+  - `permissions/` - Permissions Helper demo with cubit/state (renamed to `HelperPermissionsCubit/State` to avoid conflicts)
+  - `share/` - Share Helper demo with cubit/state
+  - `download/` - File Download Helper demo with cubit/state
+  - `config/` - App Config Helper demo with cubit/state
+  - `package_info/` - Package Info Helper demo with cubit/state
+- All helper views now use `MasterViewCubit` pattern matching `HomeView` structure
+- Updated routes configuration to use new helper view structure
+- Updated GetIt dependency injection to register all helper cubits
+- Improved code organization and maintainability
+
+### Fixed
+- Resolved naming conflicts with `PermissionsState` and `PermissionsCubit` from masterfabric_core
+- Fixed linting errors in helper views
+
+### Changed
+- Version bump to 0.0.4
+
+[0.0.4]: https://github.com/gurkanfikretgunak/masterfabric_core/releases/tag/v0.0.4
+
 ## [0.0.3] - 2025-12-23
 
 ### Added
