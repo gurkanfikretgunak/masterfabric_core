@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:masterfabric_core/masterfabric_core.dart';
 import 'package:masterfabric_core_example/features/products/cubit/products_cubit.dart';
 import 'package:masterfabric_core_example/features/products/cubit/products_state.dart';
@@ -19,7 +20,7 @@ class ProductsView extends MasterViewCubit<ProductsCubit, ProductsState> {
               title: const Text('Products'),
               leading: canPop
                   ? IconButton(
-                      icon: const Icon(Icons.arrow_back),
+                      icon: const Icon(LucideIcons.arrowLeft),
                       onPressed: () => GoRouter.of(context).pop(),
                       tooltip: 'Back',
                     )
@@ -29,14 +30,14 @@ class ProductsView extends MasterViewCubit<ProductsCubit, ProductsState> {
                   bloc: viewModel,
                   builder: (context, state) {
                     return IconButton(
-                      icon: Icon(state.isSearchActive ? Icons.close : Icons.search),
+                      icon: Icon(state.isSearchActive ? LucideIcons.x : LucideIcons.search),
                       onPressed: () => viewModel.toggleSearch(),
                       tooltip: state.isSearchActive ? 'Close Search' : 'Search',
                     );
                   },
                 ),
                 IconButton(
-                  icon: const Icon(Icons.refresh),
+                  icon: const Icon(LucideIcons.refreshCw),
                   onPressed: () => viewModel.loadProducts(),
                   tooltip: 'Refresh',
                 ),
@@ -81,16 +82,13 @@ class ProductsView extends MasterViewCubit<ProductsCubit, ProductsState> {
                   autofocus: true,
                   decoration: InputDecoration(
                     hintText: 'Search products...',
-                    prefixIcon: const Icon(Icons.search),
+                    prefixIcon: const Icon(LucideIcons.search),
                     suffixIcon: state.searchQuery.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(Icons.clear),
+                            icon: const Icon(LucideIcons.x),
                             onPressed: () => viewModel.clearSearch(),
                           )
                         : null,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
                   ),
                   onChanged: (value) => viewModel.searchProducts(value),
                 ),
@@ -131,7 +129,7 @@ class ProductsView extends MasterViewCubit<ProductsCubit, ProductsState> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.search_off, size: 64, color: Colors.grey),
+            const Icon(LucideIcons.searchX, size: 64, color: Colors.grey),
             const SizedBox(height: 16),
             Text(
               'No products found',
@@ -162,7 +160,7 @@ class ProductsView extends MasterViewCubit<ProductsCubit, ProductsState> {
             ),
             title: Text(product.name),
             subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
-            trailing: const Icon(Icons.arrow_forward_ios),
+            trailing: const Icon(LucideIcons.chevronRight),
             onTap: () {
               // Navigate to product detail
             },

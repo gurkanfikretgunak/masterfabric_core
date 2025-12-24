@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:masterfabric_core/masterfabric_core.dart' hide AppRoutes;
 import 'package:masterfabric_core_example/app/routes.dart' as app_routes;
 import 'package:masterfabric_core_example/features/home/cubit/home_cubit.dart';
@@ -19,7 +20,7 @@ class HomeView extends MasterViewCubit<HomeCubit, HomeState> {
               title: const Text('Home'),
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.refresh),
+                  icon: const Icon(LucideIcons.refreshCw),
                   onPressed: () => viewModel.loadData(),
                   tooltip: 'Refresh',
                 ),
@@ -102,20 +103,26 @@ class HomeView extends MasterViewCubit<HomeCubit, HomeState> {
                   _buildActionCard(
                     context,
                     title: 'Products',
-                    icon: Icons.shopping_bag,
+                    icon: LucideIcons.shoppingBag,
                     onTap: () => super.goRoute(app_routes.AppRoutes.products),
                   ),
                   _buildActionCard(
                     context,
                     title: 'Profile',
-                    icon: Icons.person,
+                    icon: LucideIcons.user,
                     onTap: () => super.goRoute(app_routes.AppRoutes.profile),
                   ),
                   _buildActionCard(
                     context,
                     title: 'Auth',
-                    icon: Icons.login,
+                    icon: LucideIcons.logIn,
                     onTap: () => super.goRoute(app_routes.AppRoutes.auth),
+                  ),
+                  _buildActionCard(
+                    context,
+                    title: 'Helpers',
+                    icon: LucideIcons.puzzle,
+                    onTap: () => super.goRoute(app_routes.AppRoutes.helpersHub),
                   ),
                 ],
               ),
@@ -186,7 +193,7 @@ class HomeView extends MasterViewCubit<HomeCubit, HomeState> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.check_circle, color: Colors.green),
+          Icon(LucideIcons.check, color: Colors.green),
           const SizedBox(width: 12),
           Expanded(
             child: Column(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:masterfabric_core/masterfabric_core.dart';
 import 'package:masterfabric_core_example/features/profile/cubit/profile_cubit.dart';
 import 'package:masterfabric_core_example/features/profile/cubit/profile_state.dart';
@@ -19,19 +20,19 @@ class ProfileView extends MasterViewCubit<ProfileCubit, ProfileState> {
               title: const Text('Profile'),
               leading: canPop
                   ? IconButton(
-                      icon: const Icon(Icons.arrow_back),
+                      icon: const Icon(LucideIcons.arrowLeft),
                       onPressed: () => GoRouter.of(context).pop(),
                       tooltip: 'Back',
                     )
                   : null,
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.settings),
+                  icon: const Icon(LucideIcons.settings),
                   onPressed: () => viewModel.showSettings(),
                   tooltip: 'Settings',
                 ),
                 IconButton(
-                  icon: const Icon(Icons.refresh),
+                  icon: const Icon(LucideIcons.refreshCw),
                   onPressed: () => viewModel.loadProfile(),
                   tooltip: 'Refresh',
                 ),
@@ -112,19 +113,19 @@ class ProfileView extends MasterViewCubit<ProfileCubit, ProfileState> {
                       context,
                       'Platform',
                       state.platform ?? 'Unknown',
-                      Icons.phone_android,
+                      LucideIcons.smartphone,
                     ),
                     _buildInfoTile(
                       context,
                       'Device ID',
                       state.deviceId ?? 'Unknown',
-                      Icons.fingerprint,
+                      LucideIcons.scanLine,
                     ),
                     _buildInfoTile(
                       context,
                       'Manufacturer',
                       state.manufacturer ?? 'Unknown',
-                      Icons.business,
+                      LucideIcons.building2,
                     ),
                   ],
                 ),
@@ -143,12 +144,12 @@ class ProfileView extends MasterViewCubit<ProfileCubit, ProfileState> {
                 child: Column(
                   children: [
                     ListTile(
-                      leading: const Icon(Icons.logout),
+                      leading: const Icon(LucideIcons.logOut),
                       title: const Text('Sign Out'),
                       onTap: () => viewModel.signOut(),
                     ),
                     ListTile(
-                      leading: const Icon(Icons.refresh),
+                      leading: const Icon(LucideIcons.refreshCw),
                       title: const Text('Refresh Data'),
                       onTap: () => viewModel.loadProfile(),
                     ),

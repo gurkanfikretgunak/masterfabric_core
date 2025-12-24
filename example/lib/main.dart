@@ -7,6 +7,16 @@ import 'package:masterfabric_core_example/app/routes.dart' as app_routes;
 import 'package:masterfabric_core_example/features/home/cubit/home_cubit.dart';
 import 'package:masterfabric_core_example/features/products/cubit/products_cubit.dart';
 import 'package:masterfabric_core_example/features/profile/cubit/profile_cubit.dart';
+import 'package:masterfabric_core_example/features/helpers/device_info/cubit/device_info_cubit.dart';
+import 'package:masterfabric_core_example/features/helpers/storage/cubit/storage_cubit.dart';
+import 'package:masterfabric_core_example/features/helpers/datetime/cubit/datetime_cubit.dart';
+import 'package:masterfabric_core_example/features/helpers/url_launcher/cubit/url_launcher_cubit.dart';
+import 'package:masterfabric_core_example/features/helpers/permissions/cubit/permissions_cubit.dart' as helper_permissions;
+import 'package:masterfabric_core_example/features/helpers/share/cubit/share_cubit.dart';
+import 'package:masterfabric_core_example/features/helpers/download/cubit/download_cubit.dart';
+import 'package:masterfabric_core_example/features/helpers/config/cubit/config_cubit.dart';
+import 'package:masterfabric_core_example/features/helpers/package_info/cubit/package_info_cubit.dart';
+import 'package:masterfabric_core_example/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,6 +45,17 @@ void _registerCubits() {
   getIt.registerFactory<ProductsCubit>(() => ProductsCubit());
   getIt.registerFactory<ProfileCubit>(() => ProfileCubit());
   
+  // Register helper cubits
+  getIt.registerFactory<DeviceInfoCubit>(() => DeviceInfoCubit());
+  getIt.registerFactory<StorageCubit>(() => StorageCubit());
+  getIt.registerFactory<DateTimeCubit>(() => DateTimeCubit());
+  getIt.registerFactory<UrlLauncherCubit>(() => UrlLauncherCubit());
+  getIt.registerFactory<helper_permissions.HelperPermissionsCubit>(() => helper_permissions.HelperPermissionsCubit());
+  getIt.registerFactory<ShareCubit>(() => ShareCubit());
+  getIt.registerFactory<DownloadCubit>(() => DownloadCubit());
+  getIt.registerFactory<ConfigCubit>(() => ConfigCubit());
+  getIt.registerFactory<PackageInfoCubit>(() => PackageInfoCubit());
+  
   // Register masterfabric_core cubits that are used in routes
   // These are needed because BaseViewCubit uses GetIt to resolve cubits
   getIt.registerFactory<SplashCubit>(() => SplashCubit());
@@ -54,16 +75,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MasterApp(
-      router: router,
-      shouldSetOrientation: true,
-      preferredOrientations: [
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ],
-      showPerformanceOverlay: false,
-      textDirection: TextDirection.ltr,
-      fontScale: 1.0,
+    return Theme(
+      data: AppTheme.lightTheme,
+      child: MasterApp(
+        router: router,
+        shouldSetOrientation: true,
+        preferredOrientations: [
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.portraitDown,
+        ],
+        showPerformanceOverlay: false,
+        textDirection: TextDirection.ltr,
+        fontScale: 1.0,
+      ),
     );
   }
 }
