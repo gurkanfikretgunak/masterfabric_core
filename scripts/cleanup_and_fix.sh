@@ -1,5 +1,9 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_ROOT"
+
 # Stop any running Gradle daemons to release file locks
 echo "Stopping Gradle daemons..."
 pkill -f 'java.*gradle' || echo "No Gradle daemons running."
@@ -32,7 +36,7 @@ if [ -d "example" ]; then
     echo "Cleaning example project..."
     cd example
     flutter clean
-    
+
     if [ -d "android/.gradle" ]; then
         echo "Removing example/android/.gradle..."
         rm -rf android/.gradle

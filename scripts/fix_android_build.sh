@@ -4,6 +4,9 @@
 export JAVA_HOME="/Applications/Android Studio.app/Contents/jbr/Contents/Home"
 export PATH="$JAVA_HOME/bin:$PATH"
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
 echo "=== Fixing Android Build Environment ==="
 echo "Using Java at: $JAVA_HOME"
 
@@ -13,7 +16,7 @@ pkill -f 'java.*gradle' || echo "No Gradle daemons running."
 
 # Clean Flutter project
 echo "Cleaning Flutter project..."
-cd example
+cd "$PROJECT_ROOT/example"
 flutter clean
 flutter pub get
 

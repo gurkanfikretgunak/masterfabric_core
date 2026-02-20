@@ -1,9 +1,11 @@
 #!/bin/bash
 # Fix Android Gradle build: "Cannot snapshot output property" / "Could not read workspace metadata"
-# Run from project root: ./fix_android_build.sh
+# Run from project root: ./example/scripts/fix_android_build.sh
 
 set -e
-cd "$(dirname "$0")"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+EXAMPLE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$EXAMPLE_DIR"
 
 echo "=== Fixing Android Gradle build ==="
 
@@ -39,7 +41,7 @@ flutter build apk --debug || {
     echo ""
     echo "❌ Build failed. Try running from Terminal.app instead:"
     echo "   1. Open Terminal.app (not Cursor)"
-    echo "   2. cd $(pwd)"
+    echo "   2. cd $EXAMPLE_DIR"
     echo "   3. flutter run -d sdk"
     echo ""
     echo "If it still fails, grant Full Disk Access to Terminal:"

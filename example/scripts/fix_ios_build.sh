@@ -1,9 +1,11 @@
 #!/bin/bash
 # Fix iOS simulator build: codesign "Operation not permitted" / "failed to open a file"
-# Run from project root: ./fix_ios_build.sh
+# Run from project root: ./example/scripts/fix_ios_build.sh
 
 set -e
-cd "$(dirname "$0")"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+EXAMPLE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$EXAMPLE_DIR"
 
 echo "=== Fixing iOS build permissions ==="
 
