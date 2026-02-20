@@ -6,7 +6,7 @@ This guide is for AI coding agents working in the `masterfabric_core` Flutter pa
 
 ## Project Overview
 
-**Package**: `masterfabric_core` v0.0.15  
+**Package**: `masterfabric_core` v1.0.0  
 **Type**: Flutter plugin package (iOS/Android/Web support)  
 **Purpose**: Comprehensive Flutter package providing core utilities, base classes, and shared logic for building scalable applications  
 **License**: AGPL-3.0  

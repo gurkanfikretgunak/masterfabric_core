@@ -118,7 +118,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  masterfabric_core: ^0.0.15
+  masterfabric_core: ^1.0.0
 ```
 
 Then run:
@@ -625,7 +625,7 @@ For detailed documentation, see:
 
 - **Pub.dev**: [https://pub.dev/packages/masterfabric_core](https://pub.dev/packages/masterfabric_core)
 - **GitHub**: [https://github.com/gurkanfikretgunak/masterfabric_core](https://github.com/gurkanfikretgunak/masterfabric_core)
-- **Version**: 0.0.15
+- **Version**: 1.0.0
 - **License**: AGPL-3.0
 
 ## Contributing
@@ -656,7 +656,7 @@ Or add it manually to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  masterfabric_core: ^0.0.15
+  masterfabric_core: ^1.0.0
 ```
 
 ---

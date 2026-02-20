@@ -5,6 +5,46 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-02-20
+
+### Added
+
+#### Permission Helper (Platform Channel)
+- **PermissionHelper** - Runtime permissions via native Kotlin (Android) and Swift (iOS) platform channels
+  - No Dart packages required - pure Flutter platform channel implementation
+  - `requestPermission(PermissionType)` - Request individual permissions
+  - `checkPermission(PermissionType)` - Check permission status without prompting
+  - `openAppSettings()` - Open app settings for manual permission grant
+  - Supported types: `camera`, `location`, `locationWhenInUse`, `storage`, `photos`, `microphone`, `contacts`, `notification`
+- **PermissionHelperBottomSheet** - Step-by-step permission request UI
+  - Pre-check: Skips permissions already granted (no re-ask)
+  - Summary first: Shows all needed permissions with descriptions before asking
+  - Step-by-step: User taps "Continue", then each permission requested one at a time
+  - Restylable via `PermissionHelperBottomSheetConfig` or `permissionsConfiguration.bottomSheetStyle` in app_config
+- **RunBeforeFeature.permissions** - Enum option for `MasterApp.runBefore(runBeforeFeatures: {...})`
+  - When enabled, triggers Permission Helper bottom sheet after splash when `permissionsConfiguration` has `requestOnStartup`
+  - Configure via `permissionsConfiguration` in `app_config.json` with `requiredPermissions`, `optionalPermissions`, `permissionDescriptions`, `bottomSheetStyle`
+- **Native plugin updates** - `MasterfabricCorePlugin` extended for permission handling on iOS and Android
+
+### Changed
+
+- **Version bump** - First stable 1.0.0 release
+- **MasterApp.runBefore** - Added `runBeforeFeatures` parameter (`Set<RunBeforeFeature>`) for permission flow at startup
+- **PermissionsView** - Updated to use new PermissionHelper and bottom sheet flow
+- **SplashView** - Integrated with RunBeforeFeature.permissions for post-splash permission flow
+- **README.md** - Added Permission Helper setup instructions, app_config schema, and iOS/Android manifest requirements
+
+### Removed
+
+- **PermissionHandlerHelper** - Replaced by PermissionHelper (platform channel, no `permission_handler` package)
+- **Firebase provider** - Removed from PushNotificationHelper (OneSignal-only for push)
+- **permission_handler** - Removed from pubspec.yaml (no longer required)
+
+### Dependencies
+
+- Removed `permission_handler` package
+- Removed Firebase FCM provider from push notification flow
+
 ## [0.0.15] - 2026-02-09
 
 ### Added
@@ -79,6 +119,7 @@ final connected = await NetworkInfoHelper.instance.isConnected();
 final publicIP = await NetworkInfoHelper.instance.getPublicIP();
 ```
 
+[1.0.0]: https://github.com/gurkanfikretgunak/masterfabric_core/releases/tag/v1.0.0
 [0.0.15]: https://github.com/gurkanfikretgunak/masterfabric_core/releases/tag/v0.0.15
 
 ## [0.0.14] - 2026-02-07

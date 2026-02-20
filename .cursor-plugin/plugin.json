@@ -1,6 +1,6 @@
 {
   "name": "masterfabric-core-flutter",
-  "version": "0.0.15",
+  "version": "1.0.0",
   "description": "Flutter architecture plugin for MasterFabric Core: MVVM+BLoC, Injectable, Master View patterns, and project conventions",
   "author": {
     "name": "MasterFabric Bilişim Teknolojileri A.Ş. & Gürkan Fikret Günak",
