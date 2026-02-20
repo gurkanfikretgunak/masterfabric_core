@@ -1,11 +1,54 @@
+<div align="center">
+
 # masterfabric_core
 
 [![pub package](https://img.shields.io/pub/v/masterfabric_core.svg)](https://pub.dev/packages/masterfabric_core)
 [![License](https://img.shields.io/badge/license-AGPL--3.0-blue.svg)](LICENSE)
+[![Cursor Plugin](https://img.shields.io/badge/Cursor-Plugin-00D4AA?style=for-the-badge](https://cursor.com/marketplace)
 
-A comprehensive Flutter package providing core utilities, base classes, and shared logic for building scalable Flutter applications. MasterFabric Core serves as the foundational layer for MasterFabric projects, offering a complete architecture with state management, navigation, dependency injection, and pre-built views.
+**A comprehensive Flutter package** providing core utilities, base classes, and shared logic for building scalable Flutter applications.
+
+</div>
+
+---
+
+## 🚀 Cursor Plugin — **Recommended**
+
+<table>
+<tr>
+<td width="70%">
+
+**Use MasterFabric Core with AI assistance in Cursor IDE.**
+
+The [**masterfabric-core-flutter**](https://github.com/gurkanfikretgunak/masterfabric_core) Cursor plugin provides:
+
+- **Rules** — Coding conventions, create-view, create-helper, error-handling, platform-channels
+- **Skills** — Base pattern documentation
+- **Agents** — Flutter architecture specialist
+- **Dart MCP** — Format, analyze, test, pub.dev search, symbol resolution
+
+<sub>📖 [Full plugin docs](PLUGIN_README.md)</sub>
+
+</td>
+<td width="30%" align="center">
+
+**Install**
+
+<kbd>Settings</kbd> → <kbd>Plugins</kbd> → Add from URL
+
+```
+https://github.com/gurkanfikretgunak/masterfabric_core
+```
+
+</td>
+</tr>
+</table>
+
+---
 
 ## Features
+
+MasterFabric Core serves as the foundational layer for MasterFabric projects, offering a complete architecture with state management, navigation, dependency injection, and pre-built views.
 
 ### 🏗️ Architecture & State Management
 - **Base View Classes**: `BaseViewBloc`, `BaseViewCubit`, `BaseViewHydratedCubit` for different state management needs
