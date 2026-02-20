@@ -1,0 +1,101 @@
+---
+description: Native iOS/Android integration via platform channels - no Dart packages, MethodChannel
+alwaysApply: false
+globs: ["**/*.dart", "**/*.swift", "**/*.kt"]
+---
+
+# Platform Channels Rule
+
+Use when adding native iOS/Android functionality via Flutter platform channels (no third-party Dart packages).
+
+## Architecture
+
+- **Dart**: `MethodChannel` invokes native methods
+- **iOS**: `ios/Classes/MasterfabricCorePlugin.swift` - FlutterMethodChannel
+- **Android**: `android/.../MasterfabricCorePlugin.kt` - MethodChannel
+
+## Existing Channels
+
+| Channel Name | Purpose |
+|--------------|---------|
+| `com.masterfabric.app_tracking_transparency` | iOS ATT dialog, tracking status |
+| `com.masterfabric.permission_helper` | Runtime permissions (camera, location, etc.) |
+
+## Dart Side
+
+```dart
+import 'package:flutter/services.dart';
+
+class MyNativeHelper {
+  static const _channel = MethodChannel('com.masterfabric.my_feature');
+
+  Future<bool> callNative() async {
+    try {
+      final result = await _channel.invokeMethod<bool>('methodName', args);
+      return result ?? false;
+    } on PlatformException catch (e) {
+      debugPrint('❌ Platform error: ${e.code} - ${e.message}');
+      return false;
+    }
+  }
+}
+```
+
+## iOS (Swift)
+
+```swift
+// In MasterfabricCorePlugin.swift - register channel
+let myChannel = FlutterMethodChannel(
+  name: "com.masterfabric.my_feature",
+  binaryMessenger: registrar.messenger()
+)
+registrar.addMethodCallDelegate(instance, channel: myChannel)
+
+// Handle method
+case "methodName":
+  myMethod(result: result)
+```
+
+## Android (Kotlin)
+
+```kotlin
+// In MasterfabricCorePlugin.kt
+channel = MethodChannel(binding.binaryMessenger, "com.masterfabric.my_feature")
+channel.setMethodCallHandler(this)
+
+override fun onMethodCall(call: MethodCall, result: Result) {
+  when (call.method) {
+    "methodName" -> myMethod(result)
+    else -> result.notImplemented()
+  }
+}
+```
+
+## Platform Checks in Dart
+
+Always guard channel calls:
+
+```dart
+if (kIsWeb) return null;  // Channels not available on web
+try {
+  return await _channel.invokeMethod('method', args);
+} on PlatformException catch (e) {
+  debugPrint('❌ ${e.code}: ${e.message}');
+  return null;
+}
+```
+
+## Plugin Registration
+
+- iOS: Plugin registered in `GeneratedPluginRegistrant` via pubspec
+- Android: Plugin in `MainActivity` / `FlutterEngine`
+- Both channels can be registered in same plugin class
+
+## Checklist
+
+- [ ] Channel name: `com.masterfabric.[feature]` (reverse domain)
+- [ ] Handle PlatformException in Dart
+- [ ] Platform check (kIsWeb) before channel call
+- [ ] iOS: Add usage descriptions to Info.plist (permissions)
+- [ ] Android: Add uses-permission to AndroidManifest.xml
+- [ ] Return safe defaults on error

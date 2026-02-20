@@ -1,42 +1,41 @@
 import 'package:injectable/injectable.dart';
 import 'package:masterfabric_core/masterfabric_core.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'permissions_state.dart';
 
-/// Helper Permissions Cubit
+/// Helper Permissions Cubit - uses platform channel PermissionHelper
 @injectable
 class HelperPermissionsCubit extends BaseViewModelCubit<HelperPermissionsState> {
-  final PermissionHandlerHelper _permissionHelper = PermissionHandlerHelper.instance;
+  final PermissionHelper _permissionHelper = PermissionHelper.instance;
+
+  static const List<PermissionType> _allPermissions = [
+    PermissionType.camera,
+    PermissionType.location,
+    PermissionType.photos,
+    PermissionType.storage,
+    PermissionType.microphone,
+    PermissionType.contacts,
+  ];
 
   HelperPermissionsCubit() : super(const HelperPermissionsState.initial()) {
     checkAllPermissions();
   }
 
   Future<void> checkAllPermissions() async {
-    final permissions = [
-      Permission.camera,
-      Permission.location,
-      Permission.storage,
-      Permission.photos,
-      Permission.microphone,
-      Permission.contacts,
-    ];
-
-    final Map<Permission, bool?> statuses = {};
-    for (final permission in permissions) {
-      final isGranted = await _permissionHelper.isGranted(permission);
+    final Map<PermissionType, bool?> statuses = {};
+    for (final permission in _allPermissions) {
+      final isGranted = await _permissionHelper.checkPermission(permission);
       statuses[permission] = isGranted;
     }
 
     stateChanger(HelperPermissionsState(permissionStatuses: statuses));
   }
 
-  Future<void> requestPermission(Permission permission) async {
+  Future<void> requestPermission(PermissionType permission) async {
     final granted = await _permissionHelper.requestPermission(permission);
-    final updatedStatuses = Map<Permission, bool?>.from(state.permissionStatuses);
+    final updatedStatuses =
+        Map<PermissionType, bool?>.from(state.permissionStatuses);
     updatedStatuses[permission] = granted;
     stateChanger(HelperPermissionsState(permissionStatuses: updatedStatuses));
   }
 }
-

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:masterfabric_core/src/helper/permission_helper/permission_type.dart';
 
 /// 🔐 **Permissions State**
 ///
@@ -13,7 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 /// 🔐 Permissions state class
 class PermissionsState extends Equatable {
-  final Map<Permission, bool> permissionStatuses;
+  final Map<PermissionType, bool> permissionStatuses;
   final bool isLoading;
 
   const PermissionsState({
@@ -23,7 +23,7 @@ class PermissionsState extends Equatable {
 
   /// Create a copy of this state with some fields changed
   PermissionsState copyWith({
-    Map<Permission, bool>? permissionStatuses,
+    Map<PermissionType, bool>? permissionStatuses,
     bool? isLoading,
   }) {
     return PermissionsState(

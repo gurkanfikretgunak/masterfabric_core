@@ -10,11 +10,13 @@
     "themeMode": "light",
     "fontScale": 1.0,
     "devModeGrid": false,
-    "devModeSpacer": true
+    "devModeSpacer": true,
+    "showPerformanceOverlay": false
   },
   "splashConfiguration": {
     "style": "startup",
     "duration": 2000,
+    "autoNavigate": true,
     "backgroundColor": "#FFFFFF",
     "textColor": "#000000",
     "primaryColor": "#2196F3",
@@ -43,8 +45,18 @@
     "retryCount": 3
   },
   "permissionsConfiguration": {
-    "required": [],
-    "optional": []
+    "requestOnStartup": true,
+    "requiredPermissions": ["camera", "photos", "location"],
+    "optionalPermissions": ["microphone", "contacts", "storage", "notification"],
+    "bottomSheetStyle": {
+      "primaryColor": "#2196F3",
+      "backgroundColor": "#FFFFFF",
+      "textColor": "#000000",
+      "borderRadius": 13,
+      "grantButtonLabel": "Allow",
+      "skipButtonLabel": "Skip",
+      "notNowButtonLabel": "Not Now"
+    }
   },
   "localizationConfiguration": {
     "defaultLocale": "en",

@@ -17,7 +17,7 @@ Includes native iOS App Tracking Transparency (ATT) support via platform channel
   s.source_files     = 'Classes/**/*'
   s.dependency 'Flutter'
   s.platform         = :ios, '13.0'
-  s.frameworks       = 'AppTrackingTransparency'
+  s.frameworks       = 'AppTrackingTransparency', 'AVFoundation', 'Photos', 'CoreLocation', 'Contacts'
 
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }

@@ -1,0 +1,86 @@
+---
+description: Create components that use MasterFabric base classes - MasterViewCubit, BaseViewModelCubit, pre-built views
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# Create Components With Base Rule
+
+Use when building components that extend or compose with MasterFabric base classes.
+
+## Base Classes to Use
+
+| Base Class | Use For |
+|------------|---------|
+| `MasterViewCubit<V, S>` | Full-screen views with scaffold |
+| `BaseViewModelCubit<S>` | Cubits / view models |
+| `MasterScaffoldWidget` | Custom scaffold layouts |
+| `LoadingView`, `ErrorHandlingView`, `EmptyView` | Pre-built state UIs |
+| `BlocProvider`, `BlocBuilder`, `BlocListener` | BLoC integration |
+
+## Composing With Pre-built Views
+
+```dart
+// Loading state
+if (state.status == MyStatus.loading) return const LoadingView();
+
+// Error state
+if (state.status == MyStatus.error) {
+  return ErrorHandlingView(error: state.errorMessage);
+}
+
+// Empty state
+if (state.items?.isEmpty ?? true) {
+  return EmptyView(message: 'No items found');
+}
+```
+
+## Using MasterScaffoldWidget
+
+```dart
+MasterScaffoldWidget(
+  scaffoldMessengerKey: key,
+  appBar: AppBar(title: Text('Title')),
+  body: content,
+  useSafeArea: true,
+  horizontalPadding: const PaddingVisibility.enabled(),
+  navbarSpacer: const SpacerVisibility.enabled(),
+  footerSpacer: const SpacerVisibility.enabled(),
+)
+```
+
+## Widgets That Use Cubit/State
+
+```dart
+class MyComponent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MyCubit, MyState>(
+      buildWhen: (prev, curr) => prev.status != curr.status,
+      builder: (context, state) {
+        return _buildFromState(state);
+      },
+    );
+  }
+}
+```
+
+## Layout Visibility Types
+
+- `SpacerVisibility.enabled()` / `.disabled()` - Navbar/footer spacers
+- `PaddingVisibility.enabled(value: 24.0)` / `.disabled()` - Horizontal/vertical padding
+- `AppBarPaddingVisibility` - App bar padding when SafeArea disabled
+
+## Spacer Types
+
+- `CoreSpacerType.navbar` - Top safe area
+- `CoreSpacerType.footer` - Bottom safe area
+- `CoreSpacerType.content` - Content spacer
+
+## Checklist
+
+- [ ] Extend correct base (MasterViewCubit for views, BaseViewModelCubit for cubits)
+- [ ] Use pre-built LoadingView, ErrorHandlingView, EmptyView where appropriate
+- [ ] Use MasterScaffoldWidget for custom layouts
+- [ ] BlocBuilder/buildWhen to avoid unnecessary rebuilds
+- [ ] Follow import order: Dart → Flutter → packages → masterfabric_core → relative

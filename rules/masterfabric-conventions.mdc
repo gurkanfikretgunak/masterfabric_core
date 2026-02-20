@@ -1,0 +1,100 @@
+---
+description: MasterFabric Core conventions - MVVM+BLoC, naming, state management, DI
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# MasterFabric Core Conventions
+
+Follow these conventions when working with masterfabric_core or MasterFabric-style Flutter projects.
+
+## Import Order
+
+1. Dart SDK (`dart:async`, `dart:io`)
+2. Flutter SDK (`package:flutter/...`)
+3. Flutter packages (alphabetically)
+4. masterfabric_core (`package:masterfabric_core/...`)
+5. Relative imports (same module)
+
+## Naming
+
+| Type | Convention | Example |
+|------|------------|---------|
+| Files | snake_case | `splash_view.dart`, `local_storage_helper.dart` |
+| Classes | PascalCase | `SplashView`, `LocalStorageHelper` |
+| Cubits | PascalCase + Cubit | `SplashCubit`, `HomeCubit` |
+| States | PascalCase + State | `SplashState`, `HomeState` |
+| Helpers | PascalCase + Helper | `NetworkInfoHelper`, `DateTimeHelper` |
+| Variables | camelCase | `viewModel`, `errorMessage` |
+| Private | _camelCase | `_prefs`, `_buildWidget()` |
+
+## State Classes
+
+- Extend `Equatable`
+- Implement `copyWith()` for all updates (immutable)
+- Implement `props` for Equatable
+- Use `const` constructors
+
+```dart
+class MyState extends Equatable {
+  final MyStatus status;
+  final String? errorMessage;
+  const MyState({this.status = MyStatus.initial, this.errorMessage});
+  MyState copyWith({MyStatus? status, String? errorMessage}) => MyState(...);
+  @override
+  List<Object?> get props => [status, errorMessage];
+}
+```
+
+## Cubits
+
+- Extend `BaseViewModelCubit<S>`
+- Add `@injectable` for DI
+- Use `stateChanger()` for state updates (not `emit`)
+- Use `state.copyWith()` for immutable updates
+
+## Views
+
+- Extend `MasterViewCubit<V, S>`
+- Implement `initialContent(viewModel, context)` - called once on init
+- Implement `viewContent(context, viewModel, state)` - build UI
+- Use `stateChanger()` in cubits; never `emit` directly
+
+## Error Handling
+
+- Wrap async in try-catch, return safe defaults
+- Use emoji prefixes in debugPrint: 🚀 ✅ ❌ ⚠️ 🔍 📊
+- Platform checks before platform-specific code: `kIsWeb`, `Platform.isX`
+
+## Platform Safety
+
+Always check before platform-specific code:
+
+```dart
+if (kIsWeb) return null;  // or safe default
+// Platform-specific code
+```
+
+## Code Generation
+
+After DI or i18n changes:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+## File Organization
+
+- Views: `lib/src/views/[feature]/` with `*_view.dart`, `cubit/*_cubit.dart`, `cubit/*_state.dart`
+- Helpers: `lib/src/helper/[helper_name]/` with `@lazySingleton` or `@injectable`
+- Models: `lib/src/models/`
+
+## Key Conventions
+
+1. Immutability: ALL state uses `copyWith()`
+2. Equatable: ALL state extends Equatable with `props`
+3. Injectable: Cubits and singletons use `@injectable` or `@lazySingleton`
+4. Null safety: Use `?` appropriately; avoid `!`
+5. Platform checks: Before any platform-specific code
+6. Emoji logging: 🚀 ✅ ❌ ⚠️ 🔍 📊 in debug prints
+7. Const constructors: Use wherever possible

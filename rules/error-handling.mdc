@@ -1,0 +1,108 @@
+---
+description: Error handling patterns - try-catch, emoji logging, platform checks, FlutterError.reportError
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# Error Handling Rule
+
+Use when writing async code, platform-specific code, or handling failures in MasterFabric.
+
+## Pattern 1: Try-Catch with Safe Default
+
+```dart
+Future<String?> loadData() async {
+  try {
+    debugPrint('🔍 Loading data...');
+    final result = await fetchData();
+    debugPrint('✅ Data loaded successfully');
+    return result;
+  } catch (e) {
+    debugPrint('❌ Error loading data: $e');
+    return null;  // Safe default
+  }
+}
+```
+
+## Pattern 2: Platform-Safe Operations
+
+```dart
+Future<String?> getPlatformData() async {
+  if (kIsWeb) {
+    debugPrint('⚠️ Not available on web');
+    return null;
+  }
+  try {
+    return await _fetchFromNative();
+  } catch (e) {
+    debugPrint('❌ Error: $e');
+    return null;
+  }
+}
+```
+
+Always check `kIsWeb` or `Platform.isX` before platform-specific code.
+
+## Pattern 3: State-Based Error Handling (Cubits)
+
+```dart
+void loadData() async {
+  stateChanger(state.copyWith(status: MyStatus.loading));
+  try {
+    final data = await repository.fetchData();
+    stateChanger(state.copyWith(status: MyStatus.success, data: data));
+  } catch (e) {
+    stateChanger(state.copyWith(
+      status: MyStatus.error,
+      errorMessage: e.toString(),
+    ));
+  }
+}
+```
+
+## Pattern 4: Critical Errors (FlutterError)
+
+For unrecoverable or framework-level errors:
+
+```dart
+try {
+  // critical operation
+} catch (e, stack) {
+  FlutterError.reportError(FlutterErrorDetails(
+    exception: e,
+    stack: stack,
+    library: 'my_file.dart',
+    context: ErrorDescription('Error doing X'),
+  ));
+}
+```
+
+## Emoji Logging Conventions
+
+| Emoji | Use |
+|-------|-----|
+| 🚀 | Initialization, start |
+| ✅ | Success |
+| ❌ | Error |
+| ⚠️ | Warning, fallback |
+| 🔍 | Debug, loading |
+| 📊 | Data, stats |
+
+## Platform Checks
+
+```dart
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io' show Platform;
+
+if (kIsWeb) return null;
+if (!Platform.isIOS && !Platform.isAndroid) return null;
+```
+
+## Checklist
+
+- [ ] Wrap async in try-catch
+- [ ] Return safe defaults (null, empty list, default value)
+- [ ] Use emoji prefixes in debugPrint
+- [ ] Platform check before native/platform code
+- [ ] Use FlutterError.reportError for critical failures
+- [ ] Avoid rethrowing unless caller should handle

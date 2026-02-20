@@ -1,0 +1,88 @@
+---
+description: Run Dart/Flutter analysis, format, and fix - use before commit or when debugging issues
+alwaysApply: false
+globs: ["**/*.dart", "**/pubspec.yaml"]
+---
+
+# Create Analyze Rule
+
+Use when analyzing code quality, fixing lint/analyzer issues, or preparing code for commit.
+
+## Commands
+
+### Static Analysis
+
+```bash
+dart analyze
+# or
+flutter analyze
+```
+
+Finds: type errors, unused code, style issues, null safety problems.
+
+### Format Code
+
+```bash
+dart format .
+```
+
+Formats all Dart files. Use before commit.
+
+### Format Check (CI)
+
+```bash
+dart format --set-exit-if-changed .
+```
+
+Exits non-zero if any file needs formatting. Use in CI.
+
+### Build Runner (after DI/i18n changes)
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+Regenerates: injection.config.dart, resources.g.dart, etc.
+
+### Pub Get
+
+```bash
+flutter pub get
+```
+
+After pubspec.yaml changes.
+
+## Typical Workflow
+
+1. Make code changes
+2. `dart analyze` - fix any issues
+3. `dart format .` - format code
+4. If DI or i18n changed: `dart run build_runner build --delete-conflicting-outputs`
+5. `flutter pub get` if dependencies changed
+
+## Using Dart MCP Server
+
+When the Dart/Flutter MCP server is enabled (via plugin .mcp.json), the AI can:
+
+- Run `dart analyze` and interpret results
+- Apply fixes for analyzer errors
+- Format code
+- Search pub.dev for packages
+- Run tests
+
+Prefer MCP tools over manual shell when available.
+
+## Common Analyzer Fixes
+
+- Add missing imports
+- Use `?` for nullable types
+- Add `const` where possible
+- Fix `copyWith` null handling: `status ?? this.status`
+- Remove unused variables/imports
+
+## Checklist
+
+- [ ] dart analyze passes with no errors
+- [ ] dart format applied
+- [ ] build_runner run if DI/i18n changed
+- [ ] No debug print in production paths (or use proper logging)

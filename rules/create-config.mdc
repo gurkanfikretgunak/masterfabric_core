@@ -1,0 +1,75 @@
+---
+description: Configure app via app_config.json - AssetConfigHelper, nested keys, MasterApp.runBefore
+alwaysApply: false
+globs: ["**/*.dart", "**/app_config.json"]
+---
+
+# Create Config Rule
+
+Use when adding or reading configuration from `app_config.json` in MasterFabric projects.
+
+## Config File Location
+
+- **Package**: `assets/app_config.json`
+- **Example app**: `example/assets/app_config.json`
+- Loaded via `MasterApp.runBefore(assetConfigPath: 'assets/app_config.json')`
+
+## Accessing Config in Dart
+
+```dart
+final configHelper = AssetConfigHelper();
+
+// Primitives with defaults
+final int duration = configHelper.getInt('splashConfiguration.durationSeconds', 3);
+final bool autoNav = configHelper.getBool('splashConfiguration.autoNavigate', true);
+final String appName = configHelper.getString('appSettings.appName', 'Default');
+
+// Nested keys use dot notation
+final String theme = configHelper.getString('uiConfiguration.themeMode', 'light');
+
+// Objects
+final Map<String, dynamic>? apiConfig = configHelper.getObject('apiConfiguration');
+
+// Check if key exists
+final bool hasTheme = configHelper.hasKey('uiConfiguration.themeMode');
+```
+
+## Common Config Sections
+
+| Section | Purpose |
+|---------|---------|
+| `appSettings` | appName, version, environment, debugMode |
+| `uiConfiguration` | themeMode, fontScale, showPerformanceOverlay |
+| `splashConfiguration` | durationSeconds, autoNavigate, style, colors |
+| `storageConfiguration` | localStorageType (sharedPreferences, hiveCe) |
+| `permissionsConfiguration` | requiredPermissions, optionalPermissions, showSummaryFirst, summaryTitle, summaryDescription, permissionDescriptions, bottomSheetStyle |
+| `apiConfiguration` | baseUrl, timeoutSeconds, retryCount |
+| `featureFlags` | onboardingEnabled, analyticsEnabled |
+| `navigationConfiguration` | defaultRoute, enableDeepLinking |
+
+## Adding New Config
+
+1. Add keys to `assets/app_config.json` (and example if needed)
+2. Use `AssetConfigHelper` with dot-notation path
+3. Provide sensible defaults in `getInt`, `getBool`, etc.
+
+## MasterApp.runBefore
+
+Config is loaded during app init. Pass path:
+
+```dart
+await MasterApp.runBefore(
+  assetConfigPath: 'assets/app_config.json',
+  hydrated: true,
+  requestTrackingTransparency: true,
+  networkFeatures: { NetworkInitFeature.connectivity },
+  runBeforeFeatures: { RunBeforeFeature.permissions },
+);
+```
+
+## Checklist
+
+- [ ] Use dot notation for nested keys: `section.subsection.key`
+- [ ] Always provide default values
+- [ ] Config file in assets, registered in pubspec.yaml
+- [ ] AssetConfigHelper is stateless; instantiate as needed

@@ -47,5 +47,17 @@
 	<true/>
 	<key>NSUserTrackingUsageDescription</key>
 	<string>We would like to use your data to deliver personalized content and improve your app experience.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This app needs camera access to capture photos and videos.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app needs microphone access for voice features.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app needs location access to show you relevant content.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app needs access to your photos to let you choose images.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app needs permission to save photos to your library.</string>
+	<key>NSContactsUsageDescription</key>
+	<string>This app needs contacts access to help you connect with others.</string>
 </dict>
 </plist>

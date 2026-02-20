@@ -1,0 +1,96 @@
+---
+description: How to create base/reusable widgets in MasterFabric - StatelessWidget patterns, composition, layout
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# Create Base Widget Rule
+
+Use when creating reusable base widgets, layout widgets, or scaffold components in masterfabric_core.
+
+## Placement
+
+- **Package-level base widgets**: `lib/src/base/widgets/` (e.g., MasterScaffoldWidget)
+- **Feature-specific widgets**: `lib/src/views/[feature]/widgets/`
+
+## Base Widget Patterns
+
+### 1. StatelessWidget (most common)
+
+```dart
+import 'package:flutter/material.dart';
+
+/// 🏗️ [WidgetName] - [Brief description]
+///
+/// [Additional context and usage]
+///
+/// Example:
+/// ```dart
+/// MyBaseWidget(
+///   child: content,
+///   padding: 16.0,
+/// )
+/// ```
+class MyBaseWidget extends StatelessWidget {
+  final Widget child;
+  final double? padding;
+
+  const MyBaseWidget({
+    super.key,
+    required this.child,
+    this.padding,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(padding ?? 0),
+      child: child,
+    );
+  }
+}
+```
+
+### 2. Using MasterFabric Base Classes
+
+For layout/scaffold widgets, use or compose with:
+- `MasterScaffoldWidget` - Full scaffold with app bar, body, spacers, padding
+- `SpacerVisibility`, `PaddingVisibility`, `AppBarPaddingVisibility` - Layout config
+- `GridHelper` - Grid/margin utilities
+- `CoreSpacerType` - Navbar, footer, content spacers
+
+### 3. Widget with BlocBuilder (feature widgets)
+
+```dart
+class MyFeatureWidget extends StatelessWidget {
+  const MyFeatureWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MyCubit, MyState>(
+      builder: (context, state) {
+        return _buildContent(context, state);
+      },
+    );
+  }
+}
+```
+
+## Documentation
+
+- Use emoji in doc comments: 🏗️ for structure, 🎯 for purpose, 📏 for layout
+- Include usage example in doc
+- Document all public parameters
+
+## Naming
+
+- Files: `snake_case` (e.g., `master_scaffold_widget.dart`)
+- Classes: `PascalCase` + descriptive suffix (e.g., `MasterScaffoldWidget`, `SplashStartupWidget`)
+
+## Checklist
+
+- [ ] Extends StatelessWidget (or StatefulWidget if needed)
+- [ ] Const constructor when possible
+- [ ] super.key in constructor
+- [ ] Doc comment with example
+- [ ] Placed in correct directory (base vs feature)

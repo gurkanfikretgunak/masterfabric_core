@@ -1,12 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:masterfabric_core/src/helper/permission_helper/permission_type.dart';
 import 'package:masterfabric_core/src/views/account/account_view.dart';
 import 'package:masterfabric_core/src/views/auth/auth_view.dart';
 import 'package:masterfabric_core/src/views/image_detail/image_detail_view.dart';
 import 'package:masterfabric_core/src/views/onboarding/onboarding_view.dart';
+import 'package:masterfabric_core/src/views/permissions/cubit/permissions_cubit.dart';
 import 'package:masterfabric_core/src/views/permissions/permissions_view.dart';
 import 'package:masterfabric_core/src/views/search/search_view.dart';
 import 'package:masterfabric_core/src/views/splash/splash_view.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 /// Route definitions for the app
 class AppRoutes {
@@ -53,18 +56,21 @@ class AppRoutes {
         ),
         GoRoute(
           path: permissions,
-          builder: (context, state) => PermissionsView(
-            permissions: state.uri.queryParameters['permissions']
-                    ?.split(',')
-                    .map((p) => Permission.values.firstWhere(
-                          (perm) => perm.toString() == p,
-                          orElse: () => Permission.camera,
-                        ))
-                    .toList() ??
-                [],
-            goRoute: (path) => context.go(path),
-            arguments: state.uri.queryParameters,
-          ),
+          builder: (context, state) {
+            final permStrings = state.uri.queryParameters['permissions']?.split(',') ?? [];
+            final permissions = permStrings
+                .map((p) => permissionTypeFromString(p.trim()))
+                .whereType<PermissionType>()
+                .toList();
+            return BlocProvider(
+              create: (_) => PermissionsCubit(permissions: permissions),
+              child: PermissionsView(
+                permissions: permissions,
+                goRoute: (path) => context.go(path),
+                arguments: state.uri.queryParameters,
+              ),
+            );
+          },
         ),
         GoRoute(
           path: search,

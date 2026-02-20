@@ -57,7 +57,29 @@
   "permissionsConfiguration": {
     "requestOnStartup": false,
     "requiredPermissions": [],
-    "optionalPermissions": []
+    "optionalPermissions": [],
+    "showSummaryFirst": true,
+    "summaryTitle": "Permissions needed",
+    "summaryDescription": "This app needs access to the following:",
+    "summaryContinueLabel": "Continue",
+    "permissionDescriptions": {
+      "camera": "To capture photos and videos",
+      "location": "To show nearby places",
+      "locationWhenInUse": "To show relevant content based on your location",
+      "photos": "To let you choose images from your library",
+      "microphone": "For voice features",
+      "contacts": "To help you connect with others",
+      "notification": "To send you important updates"
+    },
+    "bottomSheetStyle": {
+      "primaryColor": "#2196F3",
+      "backgroundColor": "#FFFFFF",
+      "textColor": "#000000",
+      "borderRadius": 24,
+      "grantButtonLabel": "Allow",
+      "skipButtonLabel": "Skip",
+      "notNowButtonLabel": "Not Now"
+    }
   },
   "localizationConfiguration": {
     "defaultLocale": "en",

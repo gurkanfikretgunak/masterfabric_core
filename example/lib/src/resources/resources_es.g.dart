@@ -341,6 +341,10 @@ class _TranslationsSettingsEs implements TranslationsSettingsEn {
 	@override String get colors => TranslationOverrides.string(_root.$meta, 'settings.colors', {}) ?? 'Colores';
 	@override String get view_visibility => TranslationOverrides.string(_root.$meta, 'settings.view_visibility', {}) ?? 'Visibilidad de Vista';
 	@override String get icons => TranslationOverrides.string(_root.$meta, 'settings.icons', {}) ?? 'Iconos';
+	@override String get permissions => TranslationOverrides.string(_root.$meta, 'settings.permissions', {}) ?? 'Permisos';
+	@override String get manage_permissions => TranslationOverrides.string(_root.$meta, 'settings.manage_permissions', {}) ?? 'Gestionar permisos de la app y acceso en tiempo de ejecución';
+	@override String get request_permissions_again => TranslationOverrides.string(_root.$meta, 'settings.request_permissions_again', {}) ?? 'Solicitar permisos de nuevo';
+	@override String get open_app_settings => TranslationOverrides.string(_root.$meta, 'settings.open_app_settings', {}) ?? 'Abrir configuración de la app';
 	@override String get language => TranslationOverrides.string(_root.$meta, 'settings.language', {}) ?? 'Idioma';
 	@override String get reset_to_defaults => TranslationOverrides.string(_root.$meta, 'settings.reset_to_defaults', {}) ?? 'Restablecer a Valores Predeterminados';
 	@override String get restore_theme_settings => TranslationOverrides.string(_root.$meta, 'settings.restore_theme_settings', {}) ?? 'Restaurar todas las configuraciones de tema';
@@ -863,6 +867,10 @@ extension on TranslationsEs {
 			'settings.colors' => TranslationOverrides.string(_root.$meta, 'settings.colors', {}) ?? 'Colores',
 			'settings.view_visibility' => TranslationOverrides.string(_root.$meta, 'settings.view_visibility', {}) ?? 'Visibilidad de Vista',
 			'settings.icons' => TranslationOverrides.string(_root.$meta, 'settings.icons', {}) ?? 'Iconos',
+			'settings.permissions' => TranslationOverrides.string(_root.$meta, 'settings.permissions', {}) ?? 'Permisos',
+			'settings.manage_permissions' => TranslationOverrides.string(_root.$meta, 'settings.manage_permissions', {}) ?? 'Gestionar permisos de la app y acceso en tiempo de ejecución',
+			'settings.request_permissions_again' => TranslationOverrides.string(_root.$meta, 'settings.request_permissions_again', {}) ?? 'Solicitar permisos de nuevo',
+			'settings.open_app_settings' => TranslationOverrides.string(_root.$meta, 'settings.open_app_settings', {}) ?? 'Abrir configuración de la app',
 			'settings.language' => TranslationOverrides.string(_root.$meta, 'settings.language', {}) ?? 'Idioma',
 			'settings.reset_to_defaults' => TranslationOverrides.string(_root.$meta, 'settings.reset_to_defaults', {}) ?? 'Restablecer a Valores Predeterminados',
 			'settings.restore_theme_settings' => TranslationOverrides.string(_root.$meta, 'settings.restore_theme_settings', {}) ?? 'Restaurar todas las configuraciones de tema',

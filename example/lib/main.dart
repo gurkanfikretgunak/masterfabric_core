@@ -18,6 +18,9 @@ void main() async {
       NetworkInitFeature.cloudflareTrace,
       NetworkInitFeature.connectivity,
     },
+    runBeforeFeatures: {
+      RunBeforeFeature.permissions,
+    },
   );
 
   // Initialize localization - use device locale or default to English

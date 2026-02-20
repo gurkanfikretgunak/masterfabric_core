@@ -1,0 +1,107 @@
+---
+description: Emoji-rich documentation, doc structure, @category/@subCategory for public APIs
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# Documentation Style Rule
+
+Use when documenting classes, methods, or public APIs in MasterFabric.
+
+## Class Documentation
+
+```dart
+/// 🚀 **MyView**
+///
+/// This view displays [brief description].
+/// [Additional context about when and why to use it].
+///
+/// Features:
+/// - 🔄 Auto-refresh
+/// - 📊 Real-time data
+/// - ❌ Error handling
+///
+/// {@category Views}
+/// {@subCategory Home}
+class MyView extends MasterViewCubit<MyCubit, MyState> {
+```
+
+## Emoji Conventions
+
+| Emoji | Meaning |
+|-------|---------|
+| 🚀 | Initialization, start, launch |
+| ✅ | Success, done |
+| ❌ | Error, failure |
+| ⚠️ | Warning, caution |
+| 🔍 | Debug, search, inspect |
+| 📊 | Data, statistics |
+| 🔄 | State change, refresh |
+| 🧭 | Navigation |
+| 📱 | Device, platform |
+| 🌐 | Network |
+| 💾 | Storage |
+| 🔐 | Security, permissions |
+| 🏗️ | Structure, scaffold |
+| 🎯 | Purpose, target |
+| 🛠️ | Helper, utility |
+| 🗂️ | Config, organization |
+
+## Parameter Documentation
+
+```dart
+/// Creates a [MyWidget].
+///
+/// [child] is the main content to display.
+/// [padding] controls horizontal and vertical padding; defaults to 16.0.
+const MyWidget({
+  super.key,
+  required this.child,
+  this.padding = 16.0,
+});
+```
+
+## Method Documentation
+
+```dart
+/// Loads data from the repository.
+///
+/// Returns the fetched items, or null on error.
+/// Logs errors via debugPrint.
+Future<List<Item>?> loadData() async {
+```
+
+## Category Annotations
+
+For public API organization:
+
+```dart
+/// {@category Views}
+/// {@subCategory Splash}
+
+/// {@category Helpers}
+/// {@subCategory Storage}
+
+/// {@category Widgets}
+/// {@subCategory Layout}
+```
+
+## Debug Logging Style
+
+```dart
+debugPrint('🚀 Initializing view...');
+debugPrint('✅ Data loaded successfully');
+debugPrint('❌ Error: $error');
+debugPrint('⚠️ Warning: slow network');
+debugPrint('🔍 Debug: state = $state');
+debugPrint('📊 Info: ${items.length} items');
+```
+
+## Checklist
+
+- [ ] Emoji in first line for classes
+- [ ] Brief description, then details
+- [ ] Features list with emojis (3-5 items)
+- [ ] @category and @subCategory for public APIs
+- [ ] All public parameters documented
+- [ ] Methods: purpose, returns, throws

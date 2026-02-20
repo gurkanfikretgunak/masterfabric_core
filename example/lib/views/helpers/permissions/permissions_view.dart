@@ -3,14 +3,13 @@ import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:masterfabric_core/masterfabric_core.dart'
     hide PermissionsView, PermissionsCubit, PermissionsState;
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../../theme/theme_helper.dart';
 import '../../../src/resources/resources.g.dart' as example_resources;
 import 'cubit/permissions_cubit.dart';
 import 'cubit/permissions_state.dart';
 
-/// Permissions View - Minimalist design
+/// Permissions View - uses PermissionHelper (platform channel)
 class PermissionsView
     extends MasterViewCubit<HelperPermissionsCubit, HelperPermissionsState> {
   PermissionsView({
@@ -137,16 +136,16 @@ class PermissionsView
         );
   }
 
-  String _getName(Permission p) =>
-      p.toString().split('.').last.replaceAll('_', ' ');
+  String _getName(PermissionType p) =>
+      p.name.replaceAll('_', ' ');
 
-  IconData _getIcon(Permission p) {
-    if (p == Permission.camera) return LucideIcons.camera;
-    if (p == Permission.location) return LucideIcons.mapPin;
-    if (p == Permission.storage) return LucideIcons.folder;
-    if (p == Permission.photos) return LucideIcons.image;
-    if (p == Permission.microphone) return LucideIcons.mic;
-    if (p == Permission.contacts) return LucideIcons.users;
+  IconData _getIcon(PermissionType p) {
+    if (p == PermissionType.camera) return LucideIcons.camera;
+    if (p == PermissionType.location) return LucideIcons.mapPin;
+    if (p == PermissionType.storage) return LucideIcons.folder;
+    if (p == PermissionType.photos) return LucideIcons.image;
+    if (p == PermissionType.microphone) return LucideIcons.mic;
+    if (p == PermissionType.contacts) return LucideIcons.users;
     return LucideIcons.shield;
   }
 }

@@ -8,6 +8,9 @@ import 'package:masterfabric_core/src/views/splash/widgets/splash_enterprise_wid
 import 'package:masterfabric_core/src/views/splash/cubit/splash_cubit.dart';
 import 'package:masterfabric_core/src/views/splash/cubit/splash_state.dart';
 import 'package:masterfabric_core/src/helper/asset_config_helper.dart';
+import 'package:masterfabric_core/src/helper/local_storage/local_storage_helper.dart';
+import 'package:masterfabric_core/src/helper/permission_helper/permission_helper_bottom_sheet.dart';
+import 'package:masterfabric_core/src/helper/permission_helper/permission_type.dart';
 import 'package:masterfabric_core/src/models/splash_models.dart';
 
 /// 🚀 **OSMEA Splash View**
@@ -73,14 +76,70 @@ class SplashView extends MasterViewCubit<SplashCubit, SplashState> {
           // Trigger onComplete callback
           onComplete?.call();
 
+          final target = state.navigationTarget!;
+
           // Use postFrameCallback to ensure state is fully updated before navigation
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            if (!context.mounted) return;
+
+            final pending = await LocalStorageHelper.getItem(
+              'osmea_permission_helper_pending',
+            );
+            if (pending == true && context.mounted) {
+              final requiredRaw =
+                  await LocalStorageHelper.getItem('osmea_permissions_required');
+              final optionalRaw =
+                  await LocalStorageHelper.getItem('osmea_permissions_optional');
+              final required = _toStringList(requiredRaw);
+              final optional = _toStringList(optionalRaw);
+
+              final permissions = <({PermissionType permission, bool isOptional})>[];
+              for (final k in required) {
+                final p = permissionTypeFromString(k);
+                if (p != null) permissions.add((permission: p, isOptional: false));
+              }
+              for (final k in optional) {
+                final p = permissionTypeFromString(k);
+                if (p != null) permissions.add((permission: p, isOptional: true));
+              }
+
+              if (permissions.isNotEmpty && context.mounted) {
+                final configHelper = AssetConfigHelper();
+                final permConfig =
+                    configHelper.getAllConfig()?['permissionsConfiguration'];
+                final config = permConfig is Map<String, dynamic>
+                    ? PermissionHelperBottomSheet.fromConfigMap(permConfig)
+                    : null;
+
+                var didNavigate = false;
+                void navigate() {
+                  if (!didNavigate && context.mounted) {
+                    didNavigate = true;
+                    try {
+                      super.goRoute(target);
+                    } catch (e) {
+                      debugPrint('❌ Error navigating from splash: $e');
+                      super.goRoute('/home');
+                    }
+                  }
+                }
+
+                await PermissionHelperBottomSheet.show(
+                  context,
+                  permissions: permissions,
+                  onComplete: navigate,
+                  config: config,
+                );
+                navigate();
+                return;
+              }
+            }
+
             if (context.mounted) {
               try {
-                super.goRoute(state.navigationTarget!);
+                super.goRoute(target);
               } catch (e) {
                 debugPrint('❌ Error navigating from splash: $e');
-                // Fallback to home on error
                 super.goRoute('/home');
               }
             }
@@ -135,6 +194,14 @@ class SplashView extends MasterViewCubit<SplashCubit, SplashState> {
       default:
         return SplashStyle.startup;
     }
+  }
+
+  List<String> _toStringList(dynamic value) {
+    if (value == null) return [];
+    if (value is List) {
+      return value.map((e) => e.toString()).toList();
+    }
+    return [];
   }
 
   /// Get appropriate splash widget based on style

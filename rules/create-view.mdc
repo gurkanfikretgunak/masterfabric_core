@@ -1,0 +1,139 @@
+---
+description: Step-by-step guide to create a new MasterFabric view with State, Cubit, and MasterViewCubit
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# Create View Rule
+
+Use when creating a new feature view in masterfabric_core or MasterFabric-style projects.
+
+## Directory Structure
+
+```
+lib/src/views/[feature_name]/
+├── [feature_name]_view.dart      # View class
+├── cubit/
+│   ├── [feature_name]_cubit.dart # Business logic
+│   └── [feature_name]_state.dart # State class
+└── widgets/                      # Feature-specific widgets (optional)
+    └── [feature_name]_*.dart
+```
+
+## Step 1: Create State
+
+File: `cubit/[feature_name]_state.dart`
+
+```dart
+import 'package:equatable/equatable.dart';
+
+enum MyFeatureStatus { initial, loading, success, error }
+
+class MyFeatureState extends Equatable {
+  final MyFeatureStatus status;
+  final String? errorMessage;
+  final List<MyItem>? items;
+
+  const MyFeatureState({
+    this.status = MyFeatureStatus.initial,
+    this.errorMessage,
+    this.items,
+  });
+
+  MyFeatureState copyWith({
+    MyFeatureStatus? status,
+    String? errorMessage,
+    List<MyItem>? items,
+  }) {
+    return MyFeatureState(
+      status: status ?? this.status,
+      errorMessage: errorMessage ?? this.errorMessage,
+      items: items ?? this.items,
+    );
+  }
+
+  @override
+  List<Object?> get props => [status, errorMessage, items];
+}
+```
+
+## Step 2: Create Cubit
+
+File: `cubit/[feature_name]_cubit.dart`
+
+```dart
+import 'package:injectable/injectable.dart';
+import 'package:masterfabric_core/src/core.dart';
+
+@injectable
+class MyFeatureCubit extends BaseViewModelCubit<MyFeatureState> {
+  MyFeatureCubit() : super(const MyFeatureState());
+
+  Future<void> loadData() async {
+    stateChanger(state.copyWith(status: MyFeatureStatus.loading));
+    try {
+      // Fetch data
+      stateChanger(state.copyWith(status: MyFeatureStatus.success, items: data));
+    } catch (e) {
+      stateChanger(state.copyWith(
+        status: MyFeatureStatus.error,
+        errorMessage: e.toString(),
+      ));
+    }
+  }
+}
+```
+
+- Use `stateChanger()`, never `emit`
+- Add `@injectable` for DI
+
+## Step 3: Create View
+
+File: `[feature_name]_view.dart`
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:masterfabric_core/src/core.dart';
+
+class MyFeatureView extends MasterViewCubit<MyFeatureCubit, MyFeatureState> {
+  MyFeatureView({required Function(String) goRoute})
+      : super(
+          goRoute: goRoute,
+          useSafeArea: true,
+          horizontalPadding: const PaddingVisibility.enabled(),
+        );
+
+  @override
+  Future<void> initialContent(MyFeatureCubit viewModel, BuildContext context) async {
+    viewModel.loadData();
+  }
+
+  @override
+  Widget viewContent(BuildContext context, MyFeatureCubit viewModel, MyFeatureState state) {
+    if (state.status == MyFeatureStatus.loading) return const LoadingView();
+    if (state.status == MyFeatureStatus.error) return ErrorHandlingView(error: state.errorMessage);
+    return _buildContent(state);
+  }
+}
+```
+
+## Step 4: Register in DI
+
+Run after creating cubit:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+## Step 5: Add Route
+
+Register the view in your GoRouter configuration.
+
+## Checklist
+
+- [ ] State extends Equatable with copyWith() and props
+- [ ] Cubit extends BaseViewModelCubit<S> with @injectable
+- [ ] View extends MasterViewCubit<V, S>
+- [ ] initialContent() calls viewModel init logic
+- [ ] viewContent() handles loading, error, success states
+- [ ] Use stateChanger() not emit

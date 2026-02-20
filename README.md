@@ -72,6 +72,10 @@ A comprehensive Flutter package providing core utilities, base classes, and shar
   - Preset widgets: list item, card, profile, article, product, social post, story
   - Theme support with `SkeletonTheme` and `SkeletonConfig`
   - Custom shapes with `DiamondClipper`, `HexagonClipper`, `StarClipper`
+- **PermissionHelper**: Runtime permissions via platform channels (no Dart packages)
+  - Native Kotlin (Android) and Swift (iOS) implementation
+  - Step-by-step bottom sheet after splash, restylable per app
+  - Configure via `permissionsConfiguration` in app_config and `RunBeforeFeature.permissions`
 - **AppTrackingTransparencyHelper**: iOS App Tracking Transparency (ATT) support
   - Native iOS implementation via platform channels (no external packages required)
   - Request tracking authorization with system dialog
@@ -347,6 +351,89 @@ Update types:
 - **Force**: Current version < minimumVersion (blocking, user must update)
 - **Recommended**: Current version < latestVersion with minimumVersion set
 - **Optional**: Current version < latestVersion without minimumVersion
+
+### 4e. Permission Helper (Platform Channel)
+
+The Permission Helper uses native Kotlin (Android) and Swift (iOS) via platform channels—no Dart packages. It shows a step-by-step bottom sheet after splash when permissions are configured.
+
+**UX flow:**
+1. **Pre-check** – Skips permissions already granted (no re-ask).
+2. **Summary first** – Shows a summary of all needed permissions with descriptions before asking.
+3. **Step-by-step** – User taps "Continue", then each permission is requested one at a time.
+
+**Enable in `MasterApp.runBefore`:**
+
+```dart
+await MasterApp.runBefore(
+  assetConfigPath: 'assets/app_config.json',
+  hydrated: true,
+  runBeforeFeatures: {
+    RunBeforeFeature.permissions,
+  },
+);
+```
+
+**Configure in `app_config.json`:**
+
+```json
+{
+  "permissionsConfiguration": {
+    "requestOnStartup": true,
+    "requiredPermissions": ["camera", "location", "photos"],
+    "optionalPermissions": ["microphone", "contacts"],
+    "showSummaryFirst": true,
+    "summaryTitle": "Permissions needed",
+    "summaryDescription": "This app needs access to the following:",
+    "summaryContinueLabel": "Continue",
+    "permissionDescriptions": {
+      "camera": "To capture photos and videos",
+      "location": "To show nearby places",
+      "photos": "To let you choose images"
+    },
+    "bottomSheetStyle": {
+      "primaryColor": "#2196F3",
+      "backgroundColor": "#FFFFFF",
+      "textColor": "#000000",
+      "grantButtonLabel": "Allow",
+      "skipButtonLabel": "Skip",
+      "notNowButtonLabel": "Not Now"
+    }
+  }
+}
+```
+
+Permission keys: `camera`, `location`, `locationWhenInUse`, `storage`, `photos`, `microphone`, `contacts`, `notification`
+
+**Restylable bottom sheet**: Pass `PermissionHelperBottomSheetConfig` when calling `PermissionHelperBottomSheet.show()`, or use `permissionsConfiguration.bottomSheetStyle` in app_config to customize colors and labels per app.
+
+**iOS Info.plist** – add usage description keys for each permission you request:
+
+```xml
+<key>NSCameraUsageDescription</key>
+<string>This app needs camera access to capture photos.</string>
+<key>NSMicrophoneUsageDescription</key>
+<string>This app needs microphone access for voice features.</string>
+<key>NSLocationWhenInUseUsageDescription</key>
+<string>This app needs location access to show relevant content.</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>This app needs access to your photos to let you choose images.</string>
+<key>NSContactsUsageDescription</key>
+<string>This app needs contacts access to help you connect with others.</string>
+```
+
+**Android AndroidManifest.xml** – add `<uses-permission>` for each permission:
+
+```xml
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+<uses-permission android:name="android.permission.RECORD_AUDIO" />
+<uses-permission android:name="android.permission.READ_CONTACTS" />
+<uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+```
+
+**Flow**: runBefore (reads config) → splash → permission summary (if showSummaryFirst) → permission bottom sheet (step-by-step) → home/onboarding
 
 ### 5. Use Helper Utilities
 

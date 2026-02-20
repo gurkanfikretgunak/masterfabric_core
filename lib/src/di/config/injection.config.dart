@@ -11,6 +11,8 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:masterfabric_core/src/di/config/onboarding_module.dart'
+    as _i191;
 import 'package:masterfabric_core/src/models/onboarding_models.dart' as _i736;
 import 'package:masterfabric_core/src/views/account/cubit/account_cubit.dart'
     as _i924;
@@ -28,13 +30,10 @@ import 'package:masterfabric_core/src/views/loading/cubit/loading_cubit.dart'
     as _i188;
 import 'package:masterfabric_core/src/views/onboarding/cubit/onboarding_cubit.dart'
     as _i1049;
-import 'package:masterfabric_core/src/views/permissions/cubit/permissions_cubit.dart'
-    as _i898;
 import 'package:masterfabric_core/src/views/search/cubit/search_cubit.dart'
     as _i355;
 import 'package:masterfabric_core/src/views/splash/cubit/splash_cubit.dart'
     as _i174;
-import 'package:permission_handler/permission_handler.dart' as _i292;
 
 extension GetItInjectableX on _i174.GetIt {
   // initializes the registration of main-scope dependencies inside of GetIt
@@ -43,6 +42,7 @@ extension GetItInjectableX on _i174.GetIt {
     _i526.EnvironmentFilter? environmentFilter,
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
+    final onboardingModule = _$OnboardingModule();
     gh.factory<_i924.AccountCubit>(() => _i924.AccountCubit());
     gh.factory<_i282.AuthCubit>(() => _i282.AuthCubit());
     gh.factory<_i347.EmptyViewCubit>(() => _i347.EmptyViewCubit());
@@ -51,15 +51,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i188.LoadingCubit>(() => _i188.LoadingCubit());
     gh.factory<_i355.SearchCubit>(() => _i355.SearchCubit());
     gh.factory<_i174.SplashCubit>(() => _i174.SplashCubit());
+    gh.lazySingleton<_i736.OnboardingConfig>(
+      () => onboardingModule.onboardingConfig,
+    );
     gh.factory<_i1049.OnboardingCubit>(
       () => _i1049.OnboardingCubit(config: gh<_i736.OnboardingConfig>()),
     );
     gh.factory<_i534.ImageDetailCubit>(
       () => _i534.ImageDetailCubit(imageUrl: gh<String>(), title: gh<String>()),
     );
-    gh.factory<_i898.PermissionsCubit>(
-      () => _i898.PermissionsCubit(permissions: gh<List<_i292.Permission>>()),
-    );
     return this;
   }
 }
+
+class _$OnboardingModule extends _i191.OnboardingModule {}

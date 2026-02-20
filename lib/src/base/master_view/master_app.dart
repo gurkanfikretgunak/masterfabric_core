@@ -8,10 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:masterfabric_core/src/layout/grid.dart';
 import 'package:masterfabric_core/src/base/master_view_hydrated_cubit/hydrated/hydrated_bloc_init.dart';
-import 'package:masterfabric_core/src/helper/permission_handler_helper/permission_handler_helper.dart';
 import 'package:masterfabric_core/src/helper/app_tracking_transparency_helper/app_tracking_transparency_helper.dart';
 import 'package:masterfabric_core/src/helper/network_info_helper.dart';
 import 'package:masterfabric_core/src/helper/network_init_feature.dart';
+import 'package:masterfabric_core/src/helper/run_before_feature.dart';
 // Localization imports - uncomment if using slang_flutter
 // import 'package:slang_flutter/slang_flutter.dart' show LocaleSettings, TranslationProvider;
 
@@ -67,6 +67,11 @@ class MasterApp extends StatelessWidget {
   /// - [networkFeatures]: A set of [NetworkInitFeature] values that control
   ///   which network information is fetched and persisted to local storage
   ///   during initialization. Defaults to an empty set (no network features).
+  /// - [runBeforeFeatures]: A set of [RunBeforeFeature] values (e.g. permissions)
+  ///   that control startup flows. When [RunBeforeFeature.permissions] is set
+  ///   and permissionsConfiguration in app_config has requestOnStartup with
+  ///   required/optional permissions, the Permission Helper bottom sheet is
+  ///   triggered after splash.
   ///
   /// This ensures critical services are ready before the app starts.
   ///
@@ -76,6 +81,7 @@ class MasterApp extends StatelessWidget {
     bool hydrated = false,
     bool requestTrackingTransparency = false,
     Set<NetworkInitFeature> networkFeatures = const {},
+    Set<RunBeforeFeature> runBeforeFeatures = const {},
   }) async {
     // 🛠️ Initialize necessary components before running the app
     final AssetConfigHelper assetConfigHelper = AssetConfigHelper();
@@ -89,7 +95,8 @@ class MasterApp extends StatelessWidget {
     debugPrint('🔄 Initializing app configuration system...');
     
     // Define fallback configuration path (core package default)
-    const String fallbackConfigPath = 'packages/core/assets/app_config.json';
+    const String fallbackConfigPath =
+        'packages/masterfabric_core/assets/app_config.json';
     bool assetConfigLoaded = false;
     String actualConfigPath = assetConfigPath;
 
@@ -239,9 +246,6 @@ class MasterApp extends StatelessWidget {
       await initializeHydratedBlocStorage();
     }
 
-    // Initialize permission handler for real devices
-    await PermissionHandlerHelper.instance.initializeForRealDevice();
-
     // Request App Tracking Transparency authorization (iOS only)
     if (requestTrackingTransparency) {
       debugPrint('');
@@ -335,6 +339,37 @@ class MasterApp extends StatelessWidget {
 
       debugPrint('╚══════════════════════════════════════════════════════════╝');
       debugPrint('');
+    }
+
+    // ── Run Before Features (e.g. Permissions) ─────────────────────────────
+    if (runBeforeFeatures.contains(RunBeforeFeature.permissions) &&
+        assetConfigLoaded) {
+      final requestOnStartup = assetConfigHelper.getBool(
+        'permissionsConfiguration.requestOnStartup',
+        false,
+      );
+      final required = assetConfigHelper.getList(
+        'permissionsConfiguration.requiredPermissions',
+      );
+      final optional = assetConfigHelper.getList(
+        'permissionsConfiguration.optionalPermissions',
+      );
+      final allPermissions = [...required, ...optional];
+      if (requestOnStartup && allPermissions.isNotEmpty) {
+        await LocalStorageHelper.setItem(
+          'osmea_permissions_required',
+          required,
+        );
+        await LocalStorageHelper.setItem(
+          'osmea_permissions_optional',
+          optional,
+        );
+        await LocalStorageHelper.setItem(
+          'osmea_permission_helper_pending',
+          true,
+        );
+        debugPrint('🔐 Permission Helper: ${allPermissions.length} permissions pending');
+      }
     }
 
     /// Log the initialization status

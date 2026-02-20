@@ -1,0 +1,123 @@
+---
+description: How to create helper classes in MasterFabric - utilities, services, @lazySingleton pattern
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# Create Helper Rule
+
+Use when creating utility helpers, services, or cross-cutting logic in masterfabric_core.
+
+## Directory Structure
+
+```
+lib/src/helper/[helper_name]/
+├── [helper_name]_helper.dart     # Main helper
+└── [optional_supporting_files].dart
+```
+
+## Helper Patterns
+
+### 1. Stateless Helper (no DI)
+
+```dart
+/// 🗂️ [HelperName] - [Brief description]
+///
+/// Usage:
+/// ```dart
+/// final result = MyHelper.doSomething();
+/// ```
+class MyHelper {
+  static String doSomething() => 'result';
+}
+```
+
+### 2. Singleton Helper (@lazySingleton)
+
+```dart
+import 'package:injectable/injectable.dart';
+
+/// 🛠️ [HelperName] - [Description]
+@lazySingleton
+class MyHelper {
+  Future<String?> doSomething() async {
+    try {
+      debugPrint('🔍 MyHelper: Doing something...');
+      // logic
+      debugPrint('✅ MyHelper: Success');
+      return result;
+    } catch (e) {
+      debugPrint('❌ MyHelper: Error: $e');
+      return null;
+    }
+  }
+}
+```
+
+### 3. Injectable Helper (transient)
+
+```dart
+@injectable
+class MyHelper {
+  // New instance each time via GetIt.I<MyHelper>()
+}
+```
+
+## DI Annotations
+
+| Use Case | Annotation |
+|----------|------------|
+| Singleton, shared state | `@lazySingleton` |
+| New instance per use | `@injectable` |
+| Eager singleton | `@singleton` |
+
+## Emoji Logging
+
+Use in debugPrint:
+- 🚀 Initialization
+- ✅ Success
+- ❌ Error
+- ⚠️ Warning
+- 🔍 Debug
+- 📊 Data/Stats
+
+## Platform Safety
+
+```dart
+Future<String?> getPlatformData() async {
+  if (kIsWeb) {
+    debugPrint('⚠️ Not available on web');
+    return null;
+  }
+  try {
+    return await _fetchFromNative();
+  } catch (e) {
+    debugPrint('❌ Error: $e');
+    return null;
+  }
+}
+```
+
+## Export
+
+Add to `lib/src/core.dart`:
+
+```dart
+export 'helper/[helper_name]/[helper_name]_helper.dart';
+```
+
+## Code Generation
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+## Checklist
+
+- [ ] Placed in `lib/src/helper/[helper_name]/`
+- [ ] Class name ends with `Helper`
+- [ ] @lazySingleton or @injectable as appropriate
+- [ ] Try-catch with safe defaults
+- [ ] Emoji debug logging
+- [ ] Platform checks for native code
+- [ ] Exported in core.dart

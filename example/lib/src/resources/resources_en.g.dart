@@ -616,6 +616,18 @@ class TranslationsSettingsEn {
 	/// en: 'Icons'
 	String get icons => TranslationOverrides.string(_root.$meta, 'settings.icons', {}) ?? 'Icons';
 
+	/// en: 'Permissions'
+	String get permissions => TranslationOverrides.string(_root.$meta, 'settings.permissions', {}) ?? 'Permissions';
+
+	/// en: 'Manage app permissions and runtime access'
+	String get manage_permissions => TranslationOverrides.string(_root.$meta, 'settings.manage_permissions', {}) ?? 'Manage app permissions and runtime access';
+
+	/// en: 'Request permissions again'
+	String get request_permissions_again => TranslationOverrides.string(_root.$meta, 'settings.request_permissions_again', {}) ?? 'Request permissions again';
+
+	/// en: 'Open app settings'
+	String get open_app_settings => TranslationOverrides.string(_root.$meta, 'settings.open_app_settings', {}) ?? 'Open app settings';
+
 	/// en: 'Language'
 	String get language => TranslationOverrides.string(_root.$meta, 'settings.language', {}) ?? 'Language';
 
@@ -1583,6 +1595,10 @@ extension on Translations {
 			'settings.colors' => TranslationOverrides.string(_root.$meta, 'settings.colors', {}) ?? 'Colors',
 			'settings.view_visibility' => TranslationOverrides.string(_root.$meta, 'settings.view_visibility', {}) ?? 'View Visibility',
 			'settings.icons' => TranslationOverrides.string(_root.$meta, 'settings.icons', {}) ?? 'Icons',
+			'settings.permissions' => TranslationOverrides.string(_root.$meta, 'settings.permissions', {}) ?? 'Permissions',
+			'settings.manage_permissions' => TranslationOverrides.string(_root.$meta, 'settings.manage_permissions', {}) ?? 'Manage app permissions and runtime access',
+			'settings.request_permissions_again' => TranslationOverrides.string(_root.$meta, 'settings.request_permissions_again', {}) ?? 'Request permissions again',
+			'settings.open_app_settings' => TranslationOverrides.string(_root.$meta, 'settings.open_app_settings', {}) ?? 'Open app settings',
 			'settings.language' => TranslationOverrides.string(_root.$meta, 'settings.language', {}) ?? 'Language',
 			'settings.reset_to_defaults' => TranslationOverrides.string(_root.$meta, 'settings.reset_to_defaults', {}) ?? 'Reset to Defaults',
 			'settings.restore_theme_settings' => TranslationOverrides.string(_root.$meta, 'settings.restore_theme_settings', {}) ?? 'Restore all theme settings',

@@ -104,7 +104,8 @@ class AssetConfigHelper {
   Future<bool> loadConfig(
       [String? assetPath, bool enableFallback = true]) async {
     // Define @core package config path
-    const String corePackageConfigPath = 'packages/core/assets/app_config.json';
+    const String corePackageConfigPath =
+        'packages/masterfabric_core/assets/app_config.json';
 
     // If no assetPath provided, load @core package config directly
     if (assetPath == null) {
@@ -288,6 +289,24 @@ class AssetConfigHelper {
     return defaultValue;
   }
 
+  /// 📋 Get a list of strings from the configuration using dot notation
+  ///
+  /// Parameters:
+  /// - [key]: The key path using dot notation (e.g., 'permissionsConfiguration.requiredPermissions')
+  /// - [defaultValue]: Default value to return if the key is not found
+  ///
+  /// Returns:
+  /// - List<String>: The configuration value or default value
+  List<String> getList(String key, [List<String> defaultValue = const []]) {
+    final dynamic value = _getValue(key);
+    if (value is List) {
+      return value.map((e) => e.toString()).toList();
+    }
+    debugPrint(
+        '⚠️ Key "$key" not found or not a list, returning default: $defaultValue');
+    return defaultValue;
+  }
+
   /// 🔍 Check if a key exists in the configuration
   ///
   /// Parameters:
@@ -379,7 +398,7 @@ class AssetConfigHelper {
     // Determine config source
     String configSource = 'unknown';
     if (_currentConfigPath != null) {
-      if (_currentConfigPath!.contains('packages/core/assets/')) {
+      if (_currentConfigPath!.contains('packages/masterfabric_core/assets/')) {
         configSource = 'core_package_fallback';
       } else if (_currentConfigPath!.startsWith('assets/')) {
         configSource = 'project_specific';

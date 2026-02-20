@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:masterfabric_core/src/helper/push_notification_helper/abstract/push_notification_provider_base.dart';
 import 'package:masterfabric_core/src/helper/push_notification_helper/models/push_notification_models.dart';
 import 'package:masterfabric_core/src/helper/push_notification_helper/providers/onesignal_provider.dart';
-import 'package:masterfabric_core/src/helper/push_notification_helper/providers/firebase_provider.dart';
 
 /// Push Notification Helper
 ///
@@ -130,16 +129,6 @@ class PushNotificationHelper {
         PushNotificationProviderType.onesignal,
         OneSignalProvider(),
         config.oneSignalConfig,
-      );
-      anyProviderInitialized = anyProviderInitialized || success;
-    }
-
-    // Initialize Firebase if enabled
-    if (config.isProviderEnabled(PushNotificationProviderType.firebase)) {
-      final success = await _initializeProvider(
-        PushNotificationProviderType.firebase,
-        FirebaseProvider(),
-        config.firebaseConfig,
       );
       anyProviderInitialized = anyProviderInitialized || success;
     }

@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:masterfabric_core/src/helper/permission_helper/permission_type.dart';
 
 /// Helper Permissions State
 class HelperPermissionsState extends Equatable {
-  final Map<Permission, bool?> permissionStatuses;
+  final Map<PermissionType, bool?> permissionStatuses;
 
   const HelperPermissionsState({
     required this.permissionStatuses,
@@ -13,7 +13,7 @@ class HelperPermissionsState extends Equatable {
       : permissionStatuses = const {};
 
   HelperPermissionsState copyWith({
-    Map<Permission, bool?>? permissionStatuses,
+    Map<PermissionType, bool?>? permissionStatuses,
   }) {
     return HelperPermissionsState(
       permissionStatuses: permissionStatuses ?? this.permissionStatuses,
@@ -23,4 +23,3 @@ class HelperPermissionsState extends Equatable {
   @override
   List<Object?> get props => [permissionStatuses];
 }
-
