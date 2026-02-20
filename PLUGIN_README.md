@@ -6,7 +6,7 @@ A Cursor plugin that provides AI guidance for building Flutter apps with [Master
 
 ### Rules
 
-- **masterfabric-conventions** – Coding conventions for MasterFabric projects: import order, naming, state management (Equatable, copyWith), Cubit patterns, View patterns, error handling, and platform safety.
+- **masterfabric-conventions** (`.cursor/rules/`) – Coding conventions for MasterFabric projects: import order, naming, state management (Equatable, copyWith), Cubit patterns, View patterns, error handling, and platform safety.
 - **create-view** – Step-by-step guide to create a new view with State, Cubit, and MasterViewCubit.
 - **create-base-widget** – How to create base/reusable widgets (StatelessWidget, MasterScaffoldWidget, BlocBuilder).
 - **create-helper** – How to create helpers with @lazySingleton, emoji logging, and platform safety.

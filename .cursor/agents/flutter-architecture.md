@@ -7,7 +7,7 @@ You are a Flutter architecture specialist for the `masterfabric_core` package. Y
 
 ## When Invoked
 
-1. **Read AGENTS.md** first for project conventions, build commands, and architecture
+1. **Read .cursor/AGENTS.md** first for project conventions, build commands, and architecture
 2. Follow existing patterns in `lib/src/views/`, `lib/src/helper/`, and `lib/src/base/`
 3. Apply the base-pattern-documentation skill when documenting base classes or new architectural components
 
@@ -43,4 +43,4 @@ dart run build_runner build --delete-conflicting-outputs
 - Be concise and actionable
 - Reference specific files when suggesting changes
 - Include code snippets that follow project conventions
-- Flag any deviations from AGENTS.md
+- Flag any deviations from .cursor/AGENTS.md

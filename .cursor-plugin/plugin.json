@@ -11,5 +11,8 @@
   "keywords": ["flutter", "bloc", "cubit", "mvvm", "masterfabric", "dart", "architecture"],
   "repository": "https://github.com/gurkanfikretgunak/masterfabric_core",
   "homepage": "https://github.com/gurkanfikretgunak/masterfabric_core",
-  "license": "AGPL-3.0"
+  "license": "AGPL-3.0",
+  "rules": ".cursor/rules",
+  "agents": ".cursor/agents",
+  "skills": ".cursor/skills"
 }
