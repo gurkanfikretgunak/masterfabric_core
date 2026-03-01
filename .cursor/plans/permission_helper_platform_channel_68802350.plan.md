@@ -158,7 +158,7 @@ Modify `[lib/src/base/master_view/master_app.dart](lib/src/base/master_view/mast
 
 - Add parameter: `runBeforeFeatures: Set<RunBeforeFeature> = const {}`
 - **Config is already loaded** at the start of runBefore via `assetConfigHelper.loadConfig()`. Do NOT fetch or load config again.
-- **Read permissions from the same `assetConfigHelper**` instance, in the same runBefore block, AFTER config load succeeds.
+- **Read permissions from the same `assetConfigHelper`** instance, in the same runBefore block, AFTER config load succeeds.
 - When `runBeforeFeatures.contains(RunBeforeFeature.permissions)` AND `assetConfigLoaded == true`:
   - Use `assetConfigHelper.getList('permissionsConfiguration.requiredPermissions')` and `getList('permissionsConfiguration.optionalPermissions')`
   - Use `assetConfigHelper.getBool('permissionsConfiguration.requestOnStartup', false)`
