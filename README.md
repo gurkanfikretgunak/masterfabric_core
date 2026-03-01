@@ -8,6 +8,8 @@
 
 **A comprehensive Flutter package** providing core utilities, base classes, and shared logic for building scalable Flutter applications.
 
+**Platforms: iOS & Android** | **NEW: [`masterfabric create` CLI](#new--masterfabric-cli)**
+
 </div>
 
 ---
@@ -43,6 +45,70 @@ https://github.com/gurkanfikretgunak/masterfabric_core
 </td>
 </tr>
 </table>
+
+---
+
+## NEW — MasterFabric CLI
+
+> **Create a fully architected Flutter project in seconds** — just like `flutter create`, but pre-loaded with the MasterFabric stack.
+
+```bash
+# Install
+dart pub global activate --source path tools/masterfabric_cli
+
+# Create a project (iOS & Android only)
+masterfabric create my_app --org com.mycompany
+```
+
+One command gives you:
+
+| Layer | What you get |
+|-------|-------------|
+| **Architecture** | MVVM + Cubit — `MasterViewCubit`, `BaseViewModelCubit`, Equatable states with `copyWith()` |
+| **DI** | GetIt + Injectable, ready to go |
+| **Navigation** | GoRouter with Home, Profile, Settings routes |
+| **Theme** | Light / dark theme system with `ThemeCubit` |
+| **Config** | `app_config.json`, i18n via Slang, analysis options |
+| **Platform** | AndroidManifest.xml permissions, Info.plist usage descriptions |
+| **AI Assist** | `.cursor/` rules, agents, skills, and MCP embedded for Cursor IDE |
+
+The generated project targets **iOS and Android only** (the platforms supported by `masterfabric_core`). No web, macOS, Linux, or Windows scaffolding is included.
+
+```
+my_app/
+├── lib/
+│   ├── main.dart                 # MasterApp.runBefore + entry point
+│   ├── app/
+│   │   ├── app.dart              # App widget with MasterApp
+│   │   ├── di/injection.dart     # GetIt + Injectable setup
+│   │   └── routes.dart           # GoRouter routes
+│   ├── theme/                    # Light/dark theme builder
+│   └── views/
+│       ├── home/                 # Home view + cubit + state
+│       ├── profile/              # Profile view + cubit + state
+│       └── settings/             # Settings view + theme cubit
+├── assets/
+│   ├── app_config.json
+│   └── i18n/en.i18n.json
+├── android/                      # Permissions pre-configured
+├── ios/                          # Info.plist permissions added
+├── .cursor/                      # AI rules, agents, skills
+├── pubspec.yaml                  # masterfabric_core dependency
+└── slang.yaml                    # i18n config
+```
+
+<details>
+<summary>CLI options</summary>
+
+```bash
+masterfabric create my_app                          # defaults to com.example
+masterfabric create my_app --org com.mycompany      # custom organization
+masterfabric create my_app -d "My awesome app"      # custom description
+masterfabric --version                              # print version
+masterfabric --help                                 # print help
+```
+
+</details>
 
 ---
 
@@ -681,6 +747,7 @@ This project is licensed under the GNU AGPL v3.0 License - see the [LICENSE](LIC
 
 ## Related Packages
 
+- [MasterFabric CLI](tools/masterfabric_cli/) - Project scaffolding tool (`masterfabric create`)
 - [osmea_components](https://github.com/masterfabric-mobile/osmea) - UI component library
 
 ## Support
